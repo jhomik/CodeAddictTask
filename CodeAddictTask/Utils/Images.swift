@@ -10,4 +10,5 @@ import UIKit
 struct Images {
     static let repositoryStarImage = UIImage(named: "starIcon")
     static let userAvatarImagePlaceHolder = UIImage(systemName: "folder")
+    static let disclosureIndicatorImage = UIImage(named: "forwardIcon")
 }

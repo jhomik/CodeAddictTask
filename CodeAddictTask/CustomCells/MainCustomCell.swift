@@ -13,6 +13,7 @@ class MainCustomCell: UITableViewCell {
     private let userRepositoryTitle = MainCustomLabel(size: 17, weight: .semibold)
     private let repositoryStarImageView = RepositoryStarImageView(frame: .zero)
     private let numberOfRepositoryStars = MainCustomLabel()
+    private let disclosureIndicatorImage = DisclosureIndicatorImageView(frame: .zero)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -21,6 +22,7 @@ class MainCustomCell: UITableViewCell {
         configureUserRepositoryTitle()
         configureRepositoryStarImageView()
         configureNumberOfRepositoryStars()
+        configureDisclosureIndicatorImage()
     }
     
     required init?(coder: NSCoder) {
@@ -36,7 +38,6 @@ class MainCustomCell: UITableViewCell {
         self.clipsToBounds = true
         self.layer.cornerRadius = 13
         self.backgroundColor = UIColor.cellBackgroundColor
-        self.accessoryType = .disclosureIndicator
     }
     
     private func configureUserAvataImageView() {
@@ -85,6 +86,18 @@ class MainCustomCell: UITableViewCell {
             numberOfRepositoryStars.leadingAnchor.constraint(equalTo: repositoryStarImageView.trailingAnchor, constant: 4),
             numberOfRepositoryStars.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 16),
             numberOfRepositoryStars.heightAnchor.constraint(equalToConstant: 22)
+        ])
+    }
+    
+    private func configureDisclosureIndicatorImage() {
+        self.addSubview(disclosureIndicatorImage)
+        disclosureIndicatorImage.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            disclosureIndicatorImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 39),
+            disclosureIndicatorImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            disclosureIndicatorImage.widthAnchor.constraint(equalToConstant: 8),
+            disclosureIndicatorImage.heightAnchor.constraint(equalToConstant: 13)
         ])
     }
 }

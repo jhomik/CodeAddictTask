@@ -11,4 +11,5 @@ struct Constants {
     static let mainTitle = "Search"
     static let mainCellreuseId = "mainCell"
     static let repositoryTitle = "Repositories"
+    static let searchForRepo = "Search for a repositories"
 }

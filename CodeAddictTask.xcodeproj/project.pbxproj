@@ -22,6 +22,7 @@
 		5AA280712580F5940043FE26 /* RepositoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA280702580F5940043FE26 /* RepositoryHeaderView.swift */; };
 		5AA280762581014D0043FE26 /* UserAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA280752581014D0043FE26 /* UserAvatarImageView.swift */; };
 		5AA2807F2581023C0043FE26 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA2807E2581023C0043FE26 /* UIColor+Extensions.swift */; };
+		5AA2808425810DF80043FE26 /* DisclosureIndicatorImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA2808325810DF70043FE26 /* DisclosureIndicatorImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		5AA280702580F5940043FE26 /* RepositoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryHeaderView.swift; sourceTree = "<group>"; };
 		5AA280752581014D0043FE26 /* UserAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarImageView.swift; sourceTree = "<group>"; };
 		5AA2807E2581023C0043FE26 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		5AA2808325810DF70043FE26 /* DisclosureIndicatorImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureIndicatorImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +195,7 @@
 			children = (
 				5AA280652580DCC90043FE26 /* RepositoryStarImageView.swift */,
 				5AA280752581014D0043FE26 /* UserAvatarImageView.swift */,
+				5AA2808325810DF70043FE26 /* DisclosureIndicatorImageView.swift */,
 			);
 			path = CustomImageViews;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				5AA2804E2580D13C0043FE26 /* Constants.swift in Sources */,
 				5A26474D2580CB0400803FF3 /* AppDelegate.swift in Sources */,
 				5AA2806B2580EDFA0043FE26 /* Images.swift in Sources */,
+				5AA2808425810DF80043FE26 /* DisclosureIndicatorImageView.swift in Sources */,
 				5AA280762581014D0043FE26 /* UserAvatarImageView.swift in Sources */,
 				5AA2803F2580CEE90043FE26 /* MainVC.swift in Sources */,
 				5A26474F2580CB0400803FF3 /* SceneDelegate.swift in Sources */,

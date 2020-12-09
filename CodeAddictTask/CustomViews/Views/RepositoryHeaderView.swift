@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RepositoryHeaderView: UIView {
+final class RepositoryHeaderView: UIView {
     
     private let repositoryTitleLabel = MainCustomLabel(size: 22, weight: .bold)
 

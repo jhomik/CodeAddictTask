@@ -1,5 +1,5 @@
 //
-//  RepositoryStarImageView.swift
+//  DisclosureIndicatorImageView.swift
 //  CodeAddictTask
 //
 //  Created by Jakub Homik on 09/12/2020.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class RepositoryStarImageView: UIImageView {
-    
-    private let repositoryImage = Images.repositoryStarImage
+final class DisclosureIndicatorImageView: UIImageView {
+
+    private let disclosureIndicatorImage = Images.disclosureIndicatorImage
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,6 +21,6 @@ final class RepositoryStarImageView: UIImageView {
     }
     
     private func configureRepositoryStarImageView() {
-        self.image = repositoryImage
+        self.image = disclosureIndicatorImage
     }
 }

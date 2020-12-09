@@ -7,9 +7,9 @@
 
 import UIKit
 
-class UserAvatarImageView: UIImageView {
+final class UserAvatarImageView: UIImageView {
     
-    let placeholder = Images.userAvatarImagePlaceHolder
+    private let placeholderUserAvatarImage = Images.userAvatarImagePlaceHolder
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,7 +21,7 @@ class UserAvatarImageView: UIImageView {
     }
     
     private func configureUserAvatarImageView() {
-        self.image = placeholder
+        self.image = placeholderUserAvatarImage
         self.contentMode = .scaleAspectFit
         self.layer.cornerRadius = 10
         self.clipsToBounds = true
