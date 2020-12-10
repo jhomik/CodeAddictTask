@@ -1,5 +1,5 @@
 //
-//  RepositoryStarImageView.swift
+//  RepositoryStarFillImageView.swift
 //  CodeAddictTask
 //
 //  Created by Jakub Homik on 09/12/2020.
@@ -7,20 +7,20 @@
 
 import UIKit
 
-final class RepositoryStarImageView: UIImageView {
+class RepositoryStarFillImageView: UIImageView {
     
-    private let repositoryImage = Images.repositoryStarImage
+    private let repositoryImage = Images.repositoryStarFillImage
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureRepositoryStarImageView()
+        configureRepositoryStarFillImageView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureRepositoryStarImageView() {
+    private func configureRepositoryStarFillImageView() {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.image = repositoryImage
     }

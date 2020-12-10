@@ -9,7 +9,11 @@ import Foundation
 
 struct Constants {
     static let mainTitle = "Search"
-    static let mainCellreuseId = "mainCell"
+    static let mainCellReuseId = "mainCell"
+    static let detailCellReuseId = "detailCell"
     static let repositoryTitle = "Repositories"
     static let searchForRepo = "Search for a repositories"
+    static let viewOnline = "VIEW ONLINE"
+    static let commitsHistory = "Commits History"
+    static let shareRepo = "Share Repo"
 }

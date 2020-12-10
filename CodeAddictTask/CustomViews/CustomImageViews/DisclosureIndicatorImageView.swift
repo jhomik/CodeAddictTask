@@ -21,6 +21,7 @@ final class DisclosureIndicatorImageView: UIImageView {
     }
     
     private func configureRepositoryStarImageView() {
+        self.translatesAutoresizingMaskIntoConstraints = false
         self.image = disclosureIndicatorImage
     }
 }

@@ -10,18 +10,18 @@ import UIKit
 class MainCustomCell: UITableViewCell {
     
     private let userAvatarImageView = UserAvatarImageView(frame: .zero)
-    private let userRepositoryTitle = MainCustomLabel(size: 17, weight: .semibold)
+    private let userRepositoryTitleLabel = MainCustomLabel(size: 17, weight: .semibold)
     private let repositoryStarImageView = RepositoryStarImageView(frame: .zero)
-    private let numberOfRepositoryStars = MainCustomLabel()
-    private let disclosureIndicatorImage = DisclosureIndicatorImageView(frame: .zero)
+    private let numberOfRepositoryStarsLabel = MainCustomLabel()
+    private let disclosureIndicatorImageView = DisclosureIndicatorImageView(frame: .zero)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureMainCustomCell()
         configureUserAvataImageView()
-        configureUserRepositoryTitle()
+        configureUserRepositoryTitleLabel()
         configureRepositoryStarImageView()
-        configureNumberOfRepositoryStars()
+        configureNumberOfRepositoryStarsLabel()
         configureDisclosureIndicatorImage()
     }
     
@@ -30,8 +30,8 @@ class MainCustomCell: UITableViewCell {
     }
     
     public func updateCell() {
-        userRepositoryTitle.text = "Jakub Homik"
-        numberOfRepositoryStars.text = "345"
+        userRepositoryTitleLabel.text = "Jakub Homik"
+        numberOfRepositoryStarsLabel.text = "345"
     }
     
     private func configureMainCustomCell() {
@@ -42,7 +42,6 @@ class MainCustomCell: UITableViewCell {
     
     private func configureUserAvataImageView() {
         self.addSubview(userAvatarImageView)
-        userAvatarImageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             userAvatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
@@ -52,52 +51,48 @@ class MainCustomCell: UITableViewCell {
         ])
     }
     
-    private func configureUserRepositoryTitle() {
-        self.addSubview(userRepositoryTitle)
-        userRepositoryTitle.translatesAutoresizingMaskIntoConstraints = false
+    private func configureUserRepositoryTitleLabel() {
+        self.addSubview(userRepositoryTitleLabel)
         
         NSLayoutConstraint.activate([
-            userRepositoryTitle.topAnchor.constraint(equalTo: userAvatarImageView.topAnchor, constant: 10),
-            userRepositoryTitle.leadingAnchor.constraint(equalTo: userAvatarImageView.trailingAnchor, constant: 16),
-            userRepositoryTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 16),
-            userRepositoryTitle.heightAnchor.constraint(equalToConstant: 22)
+            userRepositoryTitleLabel.topAnchor.constraint(equalTo: userAvatarImageView.topAnchor, constant: 10),
+            userRepositoryTitleLabel.leadingAnchor.constraint(equalTo: userAvatarImageView.trailingAnchor, constant: 16),
+            userRepositoryTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 16),
+            userRepositoryTitleLabel.heightAnchor.constraint(equalToConstant: 22)
         ])
     }
     
     private func configureRepositoryStarImageView() {
         self.addSubview(repositoryStarImageView)
-        repositoryStarImageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            repositoryStarImageView.topAnchor.constraint(equalTo: userRepositoryTitle.bottomAnchor, constant: 4),
+            repositoryStarImageView.topAnchor.constraint(equalTo: userRepositoryTitleLabel.bottomAnchor, constant: 4),
             repositoryStarImageView.leadingAnchor.constraint(equalTo: userAvatarImageView.trailingAnchor, constant: 16),
             repositoryStarImageView.heightAnchor.constraint(equalToConstant: 14),
             repositoryStarImageView.widthAnchor.constraint(equalToConstant: 14)
         ])
     }
     
-    private func configureNumberOfRepositoryStars() {
-        self.addSubview(numberOfRepositoryStars)
-        numberOfRepositoryStars.translatesAutoresizingMaskIntoConstraints = false
-        numberOfRepositoryStars.textColor = UIColor.numbersOfStarsColor
+    private func configureNumberOfRepositoryStarsLabel() {
+        self.addSubview(numberOfRepositoryStarsLabel)
+        numberOfRepositoryStarsLabel.textColor = UIColor.numbersOfStarsColor
         
         NSLayoutConstraint.activate([
-            numberOfRepositoryStars.topAnchor.constraint(equalTo: userRepositoryTitle.bottomAnchor),
-            numberOfRepositoryStars.leadingAnchor.constraint(equalTo: repositoryStarImageView.trailingAnchor, constant: 4),
-            numberOfRepositoryStars.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 16),
-            numberOfRepositoryStars.heightAnchor.constraint(equalToConstant: 22)
+            numberOfRepositoryStarsLabel.topAnchor.constraint(equalTo: userRepositoryTitleLabel.bottomAnchor),
+            numberOfRepositoryStarsLabel.leadingAnchor.constraint(equalTo: repositoryStarImageView.trailingAnchor, constant: 4),
+            numberOfRepositoryStarsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 16),
+            numberOfRepositoryStarsLabel.heightAnchor.constraint(equalToConstant: 22)
         ])
     }
     
     private func configureDisclosureIndicatorImage() {
-        self.addSubview(disclosureIndicatorImage)
-        disclosureIndicatorImage.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(disclosureIndicatorImageView)
         
         NSLayoutConstraint.activate([
-            disclosureIndicatorImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 39),
-            disclosureIndicatorImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            disclosureIndicatorImage.widthAnchor.constraint(equalToConstant: 8),
-            disclosureIndicatorImage.heightAnchor.constraint(equalToConstant: 13)
+            disclosureIndicatorImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 39),
+            disclosureIndicatorImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            disclosureIndicatorImageView.widthAnchor.constraint(equalToConstant: 8),
+            disclosureIndicatorImageView.heightAnchor.constraint(equalToConstant: 13)
         ])
     }
 }

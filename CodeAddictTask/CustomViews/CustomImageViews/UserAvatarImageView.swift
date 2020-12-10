@@ -21,6 +21,7 @@ final class UserAvatarImageView: UIImageView {
     }
     
     private func configureUserAvatarImageView() {
+        self.translatesAutoresizingMaskIntoConstraints = false
         self.image = placeholderUserAvatarImage
         self.contentMode = .scaleAspectFit
         self.layer.cornerRadius = 10

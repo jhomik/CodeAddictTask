@@ -11,4 +11,6 @@ struct Images {
     static let repositoryStarImage = UIImage(named: "starIcon")
     static let userAvatarImagePlaceHolder = UIImage(systemName: "folder")
     static let disclosureIndicatorImage = UIImage(named: "forwardIcon")
+    static let repositoryStarFillImage = UIImage(named: "starIconFill")
+    static let shareRepoImage = UIImage(named: "shareIcon")
 }

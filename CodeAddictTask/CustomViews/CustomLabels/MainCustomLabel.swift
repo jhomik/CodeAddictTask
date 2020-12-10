@@ -18,12 +18,14 @@ final class MainCustomLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureMainCustomLabel() {
-        self.textAlignment = .left
-    }
-    
     convenience init(size: CGFloat, weight: UIFont.Weight) {
         self.init(frame: .zero)
         self.font = UIFont.systemFont(ofSize: size, weight: weight)
+    }
+    
+    private func configureMainCustomLabel() {
+        self.numberOfLines = 0
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.textAlignment = .left
     }
 }

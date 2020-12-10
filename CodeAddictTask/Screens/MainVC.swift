@@ -38,7 +38,7 @@ class MainVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.register(MainCustomCell.self, forCellReuseIdentifier: Constants.mainCellreuseId)
+        tableView.register(MainCustomCell.self, forCellReuseIdentifier: Constants.mainCellReuseId)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -86,7 +86,7 @@ extension MainVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.mainCellreuseId, for: indexPath) as? MainCustomCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.detailCellReuseId, for: indexPath) as? MainCustomCell else { return UITableViewCell() }
         cell.updateCell()
         return cell
     }
