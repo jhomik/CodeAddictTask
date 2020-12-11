@@ -26,7 +26,6 @@ class DetailShareRepoView: UIView {
     }
     
     private func configureDetailShareRepoView() {
-        self.backgroundColor = .systemRed
         self.translatesAutoresizingMaskIntoConstraints = false
     }
 

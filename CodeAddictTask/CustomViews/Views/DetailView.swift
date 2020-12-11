@@ -17,6 +17,11 @@ class DetailView: UIView {
     private let repositoryTitleLabel = MainCustomLabel(size: 17, weight: .semibold)
     private let viewOnlineButton = DetailCustomButton(radius: 17, withTitle: Constants.viewOnline, fontSize: 15)
     private let commitsHistoryLabel = MainCustomLabel(size: 22, weight: .bold)
+    var detailRepositories: DetailRepositories? {
+        didSet {
+            
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,8 +40,14 @@ class DetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func updateUI() {
+        repositoryTitleLabel.text = detailRepositories?.name
+        repoAuthorNameLabel.text = detailRepositories?.owner.login
+        numberOfStarsLabel.text = String(detailRepositories?.stargazersCount ?? 0)
+        
+    }
+    
     private func configureDetailView() {
-        self.backgroundColor = .systemGreen
         self.translatesAutoresizingMaskIntoConstraints = false
     }
     

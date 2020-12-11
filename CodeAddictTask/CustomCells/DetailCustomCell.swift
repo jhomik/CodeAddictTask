@@ -13,6 +13,11 @@ class DetailCustomCell: UITableViewCell {
     private let commitAuthorNameLabel = MainCustomLabel(size: 11, weight: .semibold)
     private let emailLabel = MainCustomLabel(size: 17, weight: .regular)
     private let commitMessageLabel = MainCustomLabel(size: 17, weight: .regular)
+    var detailRepositories: DetailRepositories? {
+        didSet {
+            updateCell()
+        }
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

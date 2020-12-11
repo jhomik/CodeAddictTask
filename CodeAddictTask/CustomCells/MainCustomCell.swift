@@ -14,6 +14,12 @@ class MainCustomCell: UITableViewCell {
     private let repositoryStarImageView = RepositoryStarImageView(frame: .zero)
     private let numberOfRepositoryStarsLabel = MainCustomLabel()
     private let disclosureIndicatorImageView = DisclosureIndicatorImageView(frame: .zero)
+    private let networkManager = NetworkManager()
+    var repositories: Repositories? {
+        didSet {
+            updateCell()
+        }
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -29,9 +35,15 @@ class MainCustomCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func updateCell() {
-        userRepositoryTitleLabel.text = "Jakub Homik"
-        numberOfRepositoryStarsLabel.text = "345"
+    private func updateCell() {
+        guard let repo = repositories else { return }
+        userRepositoryTitleLabel.text = repo.name
+        numberOfRepositoryStarsLabel.text = String(repo.stargazersCount)
+        networkManager.downloadImage(from: repo.owner.avatarURL ?? "") { (image) in
+            DispatchQueue.main.async {
+                self.userAvatarImageView.image = image
+            }
+        }
     }
     
     private func configureMainCustomCell() {

@@ -9,7 +9,15 @@ import UIKit
 
 class MainVC: UIViewController {
     
+    private let containerActivityView = UIView()
     private let tableView = UITableView()
+    private let networkManager = NetworkManager()
+    var cachedRepositories: [String:[Repositories]] = [:]
+    var filteredRepositories: [Repositories] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +35,7 @@ class MainVC: UIViewController {
     private func configureSearchController() {
         let searchController = UISearchController()
         searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = Constants.searchForRepo
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -52,14 +61,16 @@ class MainVC: UIViewController {
 
 extension MainVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let detailVC = DetailVC()
+        detailVC.repositoryTitle = filteredRepositories[indexPath.section]
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 
 extension MainVC: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 6
+        return filteredRepositories.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -86,8 +97,8 @@ extension MainVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.detailCellReuseId, for: indexPath) as? MainCustomCell else { return UITableViewCell() }
-        cell.updateCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.mainCellReuseId, for: indexPath) as? MainCustomCell else { return UITableViewCell() }
+        cell.repositories = filteredRepositories[indexPath.section]
         return cell
     }
     
@@ -96,9 +107,24 @@ extension MainVC: UITableViewDataSource {
     }
 }
 
-extension MainVC: UISearchResultsUpdating {
+extension MainVC: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else { return }
-        print(text)
+        guard let text = searchController.searchBar.text, !text.isEmpty else { return }
+        if let previouslySearchedRepo = cachedRepositories[searchController.searchBar.text ?? ""] {
+            filteredRepositories = previouslySearchedRepo
+        } else {
+            networkManager.searchRepositories(withWord: text, completion: { [weak self] (result) in
+                guard let self = self else { return }
+                switch result {
+                case .success(let repositories):
+                    print(repositories)
+                    DispatchQueue.main.async {
+                        self.filteredRepositories = repositories.items
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        )}
     }
 }

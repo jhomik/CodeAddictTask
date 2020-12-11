@@ -12,13 +12,38 @@ class DetailVC: UIViewController {
     private let detailView = DetailView()
     private let tableView = UITableView()
     private let detailShareRepoView = DetailShareRepoView()
+    private let networkManager = NetworkManager()
+    var repositoryTitle: Repositories?
+    var detailRepositories: DetailRepositories?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureDetailVC()
         configureDetailView()
         configureDetailShareRepoView()
         configureTableView()
+        
+        networkManager.getRepositories(forOwner: repositoryTitle?.owner.login ?? "", repoName: repositoryTitle?.name ?? "") { (result) in
+            switch result {
+            case .success(let detailRepositories):
+                self.detailRepositories = detailRepositories
+                
+                self.networkManager.getListCommits(forOwner: detailRepositories.owner.login , repoName: detailRepositories.name) { (result) in
+                    switch result {
+                    case .success(let commits):
+                        print(commits)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureDetailVC()
     }
     
     private func configureDetailVC() {

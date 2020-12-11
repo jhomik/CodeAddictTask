@@ -31,6 +31,11 @@
 		5AA280B325821E010043FE26 /* DetailCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA280B225821E010043FE26 /* DetailCustomButton.swift */; };
 		5AA280BB25821ED50043FE26 /* DetailShareRepoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA280BA25821ED50043FE26 /* DetailShareRepoView.swift */; };
 		5AA280C025821F3D0043FE26 /* ShareRepoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA280BF25821F3D0043FE26 /* ShareRepoImageView.swift */; };
+		5AA280C625823CE20043FE26 /* Repositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA280C525823CE20043FE26 /* Repositories.swift */; };
+		5AA280CF25824CB30043FE26 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA280CE25824CB30043FE26 /* NetworkManager.swift */; };
+		5AA280DA2582ACBB0043FE26 /* DetailRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA280D92582ACBB0043FE26 /* DetailRepositories.swift */; };
+		5AA280E22583705D0043FE26 /* ListCommits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA280E12583705D0043FE26 /* ListCommits.swift */; };
+		5AA280EA2583AF1C0043FE26 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA280E92583AF1C0043FE26 /* UIViewController+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +86,11 @@
 		5AA280B225821E010043FE26 /* DetailCustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCustomButton.swift; sourceTree = "<group>"; };
 		5AA280BA25821ED50043FE26 /* DetailShareRepoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailShareRepoView.swift; sourceTree = "<group>"; };
 		5AA280BF25821F3D0043FE26 /* ShareRepoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareRepoImageView.swift; sourceTree = "<group>"; };
+		5AA280C525823CE20043FE26 /* Repositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repositories.swift; sourceTree = "<group>"; };
+		5AA280CE25824CB30043FE26 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		5AA280D92582ACBB0043FE26 /* DetailRepositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRepositories.swift; sourceTree = "<group>"; };
+		5AA280E12583705D0043FE26 /* ListCommits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCommits.swift; sourceTree = "<group>"; };
+		5AA280E92583AF1C0043FE26 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +141,8 @@
 		5A26474B2580CB0400803FF3 /* CodeAddictTask */ = {
 			isa = PBXGroup;
 			children = (
+				5AA280CD25824C4E0043FE26 /* Services */,
+				5AA280C425823CB80043FE26 /* Model */,
 				5AA2807D2581021E0043FE26 /* Extensions */,
 				5AA280552580D3240043FE26 /* CustomViews */,
 				5AA2804C2580D0FB0043FE26 /* Utils */,
@@ -236,6 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				5AA2807E2581023C0043FE26 /* UIColor+Extensions.swift */,
+				5AA280E92583AF1C0043FE26 /* UIViewController+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -246,6 +259,24 @@
 				5AA280B225821E010043FE26 /* DetailCustomButton.swift */,
 			);
 			path = CustomButtons;
+			sourceTree = "<group>";
+		};
+		5AA280C425823CB80043FE26 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5AA280C525823CE20043FE26 /* Repositories.swift */,
+				5AA280D92582ACBB0043FE26 /* DetailRepositories.swift */,
+				5AA280E12583705D0043FE26 /* ListCommits.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5AA280CD25824C4E0043FE26 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				5AA280CE25824CB30043FE26 /* NetworkManager.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -379,13 +410,17 @@
 			files = (
 				5AA280662580DCC90043FE26 /* RepositoryStarImageView.swift in Sources */,
 				5AA280AE258144E30043FE26 /* CircleNumberView.swift in Sources */,
+				5AA280DA2582ACBB0043FE26 /* DetailRepositories.swift in Sources */,
 				5AA2805E2580D4710043FE26 /* MainCustomLabel.swift in Sources */,
+				5AA280E22583705D0043FE26 /* ListCommits.swift in Sources */,
 				5AA280912581120F0043FE26 /* DetailVC.swift in Sources */,
+				5AA280CF25824CB30043FE26 /* NetworkManager.swift in Sources */,
 				5AA280962581130A0043FE26 /* DetailView.swift in Sources */,
 				5AA2804E2580D13C0043FE26 /* Constants.swift in Sources */,
 				5AA2809B25812C560043FE26 /* RepositoryStarFillImageView.swift in Sources */,
 				5A26474D2580CB0400803FF3 /* AppDelegate.swift in Sources */,
 				5AA2806B2580EDFA0043FE26 /* Images.swift in Sources */,
+				5AA280EA2583AF1C0043FE26 /* UIViewController+Extensions.swift in Sources */,
 				5AA280BB25821ED50043FE26 /* DetailShareRepoView.swift in Sources */,
 				5AA2808425810DF80043FE26 /* DisclosureIndicatorImageView.swift in Sources */,
 				5AA280762581014D0043FE26 /* UserAvatarImageView.swift in Sources */,
@@ -397,6 +432,7 @@
 				5AA280B325821E010043FE26 /* DetailCustomButton.swift in Sources */,
 				5AA280C025821F3D0043FE26 /* ShareRepoImageView.swift in Sources */,
 				5AA280712580F5940043FE26 /* RepositoryHeaderView.swift in Sources */,
+				5AA280C625823CE20043FE26 /* Repositories.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
