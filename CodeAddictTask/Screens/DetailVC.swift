@@ -9,12 +9,24 @@ import UIKit
 
 class DetailVC: UIViewController {
     
+    prefer
+    private(set) var activityIndicator = UIActivityIndicatorView()
+    private(set) var containerView = UIView()
     private let detailView = DetailView()
     private let tableView = UITableView()
     private let detailShareRepoView = DetailShareRepoView()
     private let networkManager = NetworkManager()
     var repositoryTitle: Repositories?
-    var detailRepositories: DetailRepositories?
+    private(set) var detailRepositories: DetailRepositories? {
+        didSet {
+            updateUI()
+        }
+    }
+    private(set) var listCommits: [ListCommit] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,28 +34,54 @@ class DetailVC: UIViewController {
         configureDetailShareRepoView()
         configureTableView()
         
-        networkManager.getRepositories(forOwner: repositoryTitle?.owner.login ?? "", repoName: repositoryTitle?.name ?? "") { (result) in
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureDetailVC()
+        downloadRepositories()
+        downloadCommits()
+    }
+    
+    private func downloadRepositories() {
+        networkManager.getRepositories(forOwner: repositoryTitle?.owner.login ?? "", repoName: repositoryTitle?.name ?? "") { [weak self] (result) in
+            guard let self = self else { return }
             switch result {
             case .success(let detailRepositories):
+                print(detailRepositories)
                 self.detailRepositories = detailRepositories
                 
-                self.networkManager.getListCommits(forOwner: detailRepositories.owner.login , repoName: detailRepositories.name) { (result) in
-                    switch result {
-                    case .success(let commits):
-                        print(commits)
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                    }
-                }
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureDetailVC()
+    private func downloadCommits() {
+        showLoadingSpinner(with: containerView, spinner: activityIndicator)
+        networkManager.getListCommits(forOwner: repositoryTitle?.owner.login ?? "" , repoName: repositoryTitle?.name ?? "") { [weak self] (result) in
+            guard let self = self else { return }
+            self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
+            switch result {
+            case .success(let commits):
+                DispatchQueue.main.async {
+                    self.listCommits = commits
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+    private func shareRepository() {
+        guard let detailRepo = detailRepositories, let url = URL(string: detailRepo.htmlUrl) else { return }
+        let items: [Any] = [Constants.checkOutThisRepository + "\(detailRepo.name)", url]
+        let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        present(ac, animated: true)
+    }
+    
+    private func updateUI() {
+        detailView.detailRepositories = detailRepositories
     }
     
     private func configureDetailVC() {
@@ -56,6 +94,7 @@ class DetailVC: UIViewController {
     
     private func configureDetailView() {
         view.addSubview(detailView)
+        detailView.delegate = self
         
         NSLayoutConstraint.activate([
             detailView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -84,6 +123,7 @@ class DetailVC: UIViewController {
     
     private func configureDetailShareRepoView() {
         view.addSubview(detailShareRepoView)
+        detailShareRepoView.delegate = self
         
         NSLayoutConstraint.activate([
             detailShareRepoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -95,25 +135,40 @@ class DetailVC: UIViewController {
 }
 
 extension DetailVC: UITableViewDelegate {
-    
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 120
+//    }
 }
 
 extension DetailVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        return listCommits.count
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.detailCellReuseId, for: indexPath) as? DetailCustomCell else { return UITableViewCell() }
-        cell.updateCell()
+        cell.listOfCommits = listCommits[indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 89
+    }
+}
+
+extension DetailVC: ViewOnlineButtonDelegate {
+    func buttonTapped() {
+        guard let detailRepo = detailRepositories else { return }
+        presentRepositoryOnSafari(with: detailRepo.htmlUrl)
+    }
+}
+
+extension DetailVC: ShareRepoButtonDelegate {
+    func share() {
+        shareRepository()
     }
 }

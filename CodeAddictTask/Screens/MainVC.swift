@@ -9,11 +9,12 @@ import UIKit
 
 class MainVC: UIViewController {
     
-    private let containerActivityView = UIView()
+    private(set) var activityIndicator = UIActivityIndicatorView()
+    private(set) var containerView = UIView()
     private let tableView = UITableView()
     private let networkManager = NetworkManager()
-    var cachedRepositories: [String:[Repositories]] = [:]
-    var filteredRepositories: [Repositories] = [] {
+    private(set) var cachedRepositories: [String:[Repositories]] = [:]
+    private(set) var filteredRepositories: [Repositories] = [] {
         didSet {
             tableView.reloadData()
         }
@@ -26,15 +27,24 @@ class MainVC: UIViewController {
         configureTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigationBarMainVC()
+    }
+    
+    private func configureNavigationBarMainVC() {
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.view.backgroundColor = .systemBackground
+    }
+    
     private func configureMainVC() {
-        view.backgroundColor = .systemBackground
         title = Constants.mainTitle
+        view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     private func configureSearchController() {
         let searchController = UISearchController()
-        searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = Constants.searchForRepo
         searchController.obscuresBackgroundDuringPresentation = false
@@ -68,7 +78,6 @@ extension MainVC: UITableViewDelegate {
 }
 
 extension MainVC: UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return filteredRepositories.count
     }
@@ -107,14 +116,21 @@ extension MainVC: UITableViewDataSource {
     }
 }
 
-extension MainVC: UISearchResultsUpdating, UISearchBarDelegate {
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text, !text.isEmpty else { return }
-        if let previouslySearchedRepo = cachedRepositories[searchController.searchBar.text ?? ""] {
+extension MainVC: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reload), object: searchBar)
+        perform(#selector(reload), with: searchBar, afterDelay: 0.5)
+    }
+    
+    @objc func reload(_ searchBar: UISearchBar) {
+        guard let query = searchBar.text, query.trimmingCharacters(in: .whitespaces) != "" else { return filteredRepositories.removeAll() }
+        showLoadingSpinner(with: containerView, spinner: activityIndicator)
+        if let previouslySearchedRepo = cachedRepositories[searchBar.text ?? ""] {
             filteredRepositories = previouslySearchedRepo
         } else {
-            networkManager.searchRepositories(withWord: text, completion: { [weak self] (result) in
+            networkManager.searchRepositories(withWord: query, completion: { [weak self] (result) in
                 guard let self = self else { return }
+                self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
                 switch result {
                 case .success(let repositories):
                     print(repositories)
@@ -124,7 +140,14 @@ extension MainVC: UISearchResultsUpdating, UISearchBarDelegate {
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
-            }
-        )}
+            })
+           }
+        print(query)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        filteredRepositories.removeAll()
     }
 }
+
+

@@ -8,7 +8,6 @@
 import UIKit
 
 extension UIColor {
-    
     static var numbersOfStarsColor = UIColor { (traitCollection: UITraitCollection) -> UIColor in
         if traitCollection.userInterfaceStyle == .dark {
             return UIColor.systemGray
@@ -62,6 +61,22 @@ extension UIColor {
             return UIColor.systemGray
         } else {
             return UIColor(displayP3Red: 158/255, green: 158/255, blue: 158/255, alpha: 1)
+        }
+    }
+    
+    static var detailViewTitlesColor = UIColor { (traitCollection: UITraitCollection) -> UIColor in
+        if traitCollection.userInterfaceStyle == .dark {
+            return UIColor(displayP3Red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
+        } else {
+            return UIColor(displayP3Red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
+        }
+    }
+    
+    static var defaultMainColor = UIColor { (traitCollection: UITraitCollection) -> UIColor in
+        if traitCollection.userInterfaceStyle == .dark {
+            return UIColor(displayP3Red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
+        } else {
+            return UIColor(displayP3Red: 0/255, green: 0/255, blue: 0/255, alpha: 1)
         }
     }
 }

@@ -13,10 +13,12 @@ struct DetailRepositories: Decodable {
     let name: String
     let owner: DetailOwner
     let stargazersCount: Int
+    let htmlUrl: String
 
     enum CodingKeys: String, CodingKey {
         case name, owner
         case stargazersCount = "stargazers_count"
+        case htmlUrl = "html_url"
     }
 }
 

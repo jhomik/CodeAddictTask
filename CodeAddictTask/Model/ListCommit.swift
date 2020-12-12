@@ -1,5 +1,5 @@
 //
-//  ListCommits.swift
+//  ListCommit.swift
 //  CodeAddictTask
 //
 //  Created by Jakub Homik on 11/12/2020.
@@ -8,18 +8,22 @@
 import Foundation
 
 // MARK: - ListCommit
-struct ListCommits: Decodable {
-    let sha: String
-    let commit: [Commit]
+
+struct ListCommit: Codable {
+    let commit: Commit
 }
 
 // MARK: - Commit
-struct Commit: Decodable {
+
+struct Commit: Codable {
     let author: Author
     let message: String
 }
 
 // MARK: - Author
-struct Author: Decodable {
+
+struct Author: Codable {
     let name, email: String
 }
+
+typealias ListCommits = [ListCommit]

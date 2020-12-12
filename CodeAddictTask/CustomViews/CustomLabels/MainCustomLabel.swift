@@ -18,8 +18,9 @@ final class MainCustomLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(size: CGFloat, weight: UIFont.Weight) {
+    convenience init(size: CGFloat, weight: UIFont.Weight, color: UIColor = UIColor.defaultMainColor) {
         self.init(frame: .zero)
+        self.textColor = color
         self.font = UIFont.systemFont(ofSize: size, weight: weight)
     }
     

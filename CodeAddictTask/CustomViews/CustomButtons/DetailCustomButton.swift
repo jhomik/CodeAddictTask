@@ -18,7 +18,7 @@ class DetailCustomButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(radius: CGFloat, withTitle: String?, fontSize: CGFloat) {
+    convenience init(radius: CGFloat, withTitle: String? = Constants.viewOnline, fontSize: CGFloat) {
         self.init(frame: .zero)
         self.titleLabel?.font = UIFont.systemFont(ofSize: fontSize, weight: .semibold)
         self.setTitle(withTitle, for: .normal)

@@ -10,6 +10,7 @@ import UIKit
 final class UserAvatarImageView: UIImageView {
     
     private let placeholderUserAvatarImage = Images.userAvatarImagePlaceHolder
+    private let networkManager = NetworkManager()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,7 +25,15 @@ final class UserAvatarImageView: UIImageView {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.image = placeholderUserAvatarImage
         self.contentMode = .scaleAspectFit
-        self.layer.cornerRadius = 10
         self.clipsToBounds = true
+    }
+    
+    func downloadImage(fromUrl url: String) {
+        networkManager.downloadImage(from: url) { [weak self] (image) in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.image = image
+            }
+        }
     }
 }

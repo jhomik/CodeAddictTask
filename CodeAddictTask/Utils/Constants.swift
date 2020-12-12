@@ -16,4 +16,6 @@ struct Constants {
     static let viewOnline = "VIEW ONLINE"
     static let commitsHistory = "Commits History"
     static let shareRepo = "Share Repo"
+    static let repoBy = "REPO BY"
+    static let checkOutThisRepository = "Check out this repository: "
 }

@@ -4,22 +4,26 @@
 //
 //  Created by Jakub Homik on 09/12/2020.
 //
+protocol ViewOnlineButtonDelegate: AnyObject {
+    func buttonTapped()
+}
 
 import UIKit
 
 class DetailView: UIView {
     
     private let userAvatarImageView = UserAvatarImageView(frame: .zero)
-    private let repositoryByLabel = MainCustomLabel(size: 15, weight: .semibold)
-    private let repoAuthorNameLabel = MainCustomLabel(size: 28, weight: .bold)
-    private let numberOfStarsLabel = MainCustomLabel(size: 13, weight: .regular)
+    private let repositoryByLabel = MainCustomLabel(size: 15, weight: .semibold, color: UIColor.detailViewTitlesColor)
+    private let repoAuthorNameLabel = MainCustomLabel(size: 28, weight: .bold, color: UIColor.detailViewTitlesColor)
+    private let numberOfStarsLabel = MainCustomLabel(size: 13, weight: .regular, color: UIColor.detailViewTitlesColor)
     private let repositoryStarFillImageView = RepositoryStarFillImageView(frame: .zero)
     private let repositoryTitleLabel = MainCustomLabel(size: 17, weight: .semibold)
-    private let viewOnlineButton = DetailCustomButton(radius: 17, withTitle: Constants.viewOnline, fontSize: 15)
+    private let viewOnlineButton = DetailCustomButton(radius: 17, fontSize: 15)
     private let commitsHistoryLabel = MainCustomLabel(size: 22, weight: .bold)
+    weak var delegate: ViewOnlineButtonDelegate?
     var detailRepositories: DetailRepositories? {
         didSet {
-            
+            updateDetailRepositoriesView()
         }
     }
 
@@ -40,11 +44,13 @@ class DetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func updateUI() {
-        repositoryTitleLabel.text = detailRepositories?.name
-        repoAuthorNameLabel.text = detailRepositories?.owner.login
-        numberOfStarsLabel.text = String(detailRepositories?.stargazersCount ?? 0)
-        
+    private func updateDetailRepositoriesView() {
+        DispatchQueue.main.async {
+            self.repositoryTitleLabel.text = self.detailRepositories?.name
+            self.repoAuthorNameLabel.text = self.detailRepositories?.owner.login
+            self.numberOfStarsLabel.text = String(self.detailRepositories?.stargazersCount ?? 0)
+            self.userAvatarImageView.downloadImage(fromUrl: self.detailRepositories?.owner.avatarURL ?? "")
+        }
     }
     
     private func configureDetailView() {
@@ -53,9 +59,10 @@ class DetailView: UIView {
     
     private func configureUserAvatarImageview() {
         self.addSubview(userAvatarImageView)
+        userAvatarImageView.contentMode = .scaleAspectFill
         
         NSLayoutConstraint.activate([
-            userAvatarImageView.topAnchor.constraint(equalTo: self.topAnchor),
+            userAvatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: -4),
             userAvatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             userAvatarImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             userAvatarImageView.heightAnchor.constraint(equalToConstant: 263)
@@ -64,7 +71,8 @@ class DetailView: UIView {
     
     private func configureRepositoryByLabel() {
         userAvatarImageView.addSubview(repositoryByLabel)
-        repositoryByLabel.text = "REPO BY"
+        repositoryByLabel.text = Constants.repoBy
+        repositoryByLabel.alpha = 0.6
         
         NSLayoutConstraint.activate([
             repositoryByLabel.topAnchor.constraint(equalTo: self.topAnchor,constant: 159),
@@ -76,7 +84,6 @@ class DetailView: UIView {
     
     private func configureRepoAuthorNameLabel() {
         userAvatarImageView.addSubview(repoAuthorNameLabel)
-        repoAuthorNameLabel.text = "Repo Author Name"
         
         NSLayoutConstraint.activate([
             repoAuthorNameLabel.topAnchor.constraint(equalTo: repositoryByLabel.bottomAnchor, constant: 4),
@@ -99,7 +106,7 @@ class DetailView: UIView {
     
     private func configureNumberOfStarsLabel() {
         userAvatarImageView.addSubview(numberOfStarsLabel)
-        numberOfStarsLabel.text = "Number of Stars (234)"
+        numberOfStarsLabel.alpha = 0.5
         
         NSLayoutConstraint.activate([
             numberOfStarsLabel.topAnchor.constraint(equalTo: repoAuthorNameLabel.bottomAnchor, constant: 6),
@@ -111,25 +118,30 @@ class DetailView: UIView {
     
     private func configureRepositoryTitleLabel() {
         self.addSubview(repositoryTitleLabel)
-        repositoryTitleLabel.text = "Repo Title"
         
         NSLayoutConstraint.activate([
             repositoryTitleLabel.topAnchor.constraint(equalTo: userAvatarImageView.bottomAnchor, constant: 21),
             repositoryTitleLabel.leadingAnchor.constraint(equalTo: repositoryByLabel.leadingAnchor),
-            repositoryTitleLabel.widthAnchor.constraint(equalToConstant: 105),
+            repositoryTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             repositoryTitleLabel.heightAnchor.constraint(equalToConstant: 22)
         ])
     }
     
     private func configureViewOnlineButton() {
         self.addSubview(viewOnlineButton)
+        viewOnlineButton.addTarget(self, action: #selector(onlineButtonTapped), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
             viewOnlineButton.topAnchor.constraint(equalTo: userAvatarImageView.bottomAnchor, constant: 17),
             viewOnlineButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            viewOnlineButton.leadingAnchor.constraint(equalTo: repositoryTitleLabel.trailingAnchor, constant: 20),
             viewOnlineButton.widthAnchor.constraint(equalToConstant: 118),
             viewOnlineButton.heightAnchor.constraint(equalToConstant: 30)
         ])
+    }
+    
+    @objc private func onlineButtonTapped() {
+        delegate?.buttonTapped()
     }
     
     private func configureCommitsHistoryLabel() {

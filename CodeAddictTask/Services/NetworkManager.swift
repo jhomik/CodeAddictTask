@@ -22,6 +22,7 @@ class NetworkManager {
             }
             
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else { return }
+            print("URL RESPONSE: \(response)")
             guard let data = data else { return }
             
             do {
@@ -43,7 +44,7 @@ class NetworkManager {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             
             if let _ = error {
-                
+                print("error")
             }
             
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else { return }
@@ -61,10 +62,9 @@ class NetworkManager {
         task.resume()
     }
     
-    func getListCommits(forOwner: String, repoName: String, completion: @escaping (Result<ListCommits, Error>) -> Void) {
-        let endpointURL = "repos/\(forOwner)/\(repoName)/commits/"
+    func getListCommits(forOwner: String, repoName: String, completion: @escaping (Result<[ListCommit], Error>) -> Void) {
+        let endpointURL = "repos/\(forOwner)/\(repoName)/commits?page=1&per_page=3"
         guard let url = URL(string: baseURL + endpointURL) else { return }
-        
         
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             
@@ -73,12 +73,13 @@ class NetworkManager {
             }
             
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else { return }
+            print("URL RESPONSE: \(response)")
             
             guard let data = data else { return }
-            
+            print("URL DATA: \(data)")
             do {
                 let decoder = JSONDecoder()
-                let listCommits = try decoder.decode(ListCommits.self, from: data)
+                let listCommits = try decoder.decode([ListCommit].self, from: data)
                 completion(.success(listCommits))
             } catch let error {
                 print(error.localizedDescription)

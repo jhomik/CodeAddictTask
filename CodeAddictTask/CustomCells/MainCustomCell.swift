@@ -39,11 +39,7 @@ class MainCustomCell: UITableViewCell {
         guard let repo = repositories else { return }
         userRepositoryTitleLabel.text = repo.name
         numberOfRepositoryStarsLabel.text = String(repo.stargazersCount)
-        networkManager.downloadImage(from: repo.owner.avatarURL ?? "") { (image) in
-            DispatchQueue.main.async {
-                self.userAvatarImageView.image = image
-            }
-        }
+        userAvatarImageView.downloadImage(fromUrl: repo.owner.avatarURL ?? "")
     }
     
     private func configureMainCustomCell() {
@@ -54,6 +50,7 @@ class MainCustomCell: UITableViewCell {
     
     private func configureUserAvataImageView() {
         self.addSubview(userAvatarImageView)
+        userAvatarImageView.layer.cornerRadius = 10
         
         NSLayoutConstraint.activate([
             userAvatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
