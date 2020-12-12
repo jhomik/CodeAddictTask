@@ -5,13 +5,18 @@
 //  Created by Jakub Homik on 10/12/2020.
 //
 
+protocol ShareRepoButtonDelegate: AnyObject {
+    func share()
+}
+
 import UIKit
 
 class DetailShareRepoView: UIView {
     
     private let shareRepoButton = DetailCustomButton(radius: 10, withTitle: nil, fontSize: 17)
     private let shareRepoImageView = ShareRepoImageView(frame: .zero)
-    private let shareRepoLabel = MainCustomLabel(size: 17, weight: .semibold)
+    private let shareRepoLabel = MainCustomLabel(size: 17, weight: .semibold, color: UIColor.detailCustomButtonTitleColor)
+    weak var delegate: ShareRepoButtonDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,6 +36,7 @@ class DetailShareRepoView: UIView {
 
     private func configureShareRepoButton() {
         self.addSubview(shareRepoButton)
+        shareRepoButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
 
         NSLayoutConstraint.activate([
             shareRepoButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -44),
@@ -38,6 +44,10 @@ class DetailShareRepoView: UIView {
             shareRepoButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             shareRepoButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+    
+    @objc private func shareButtonTapped() {
+        delegate?.share()
     }
     
     private func configureShareRepoImageView() {

@@ -6,11 +6,11 @@
 //
 
 import UIKit
+import SafariServices
 
 extension UIViewController {
-    
-    func showLoadingSpinner(with containerView: UIView) {
-        containerView.frame = view.bounds
+    func showLoadingSpinner(with containerView: UIView, spinner: UIActivityIndicatorView) {
+        spinner.style = .large
         containerView.backgroundColor = .systemBackground
         containerView.alpha = 0
 
@@ -18,21 +18,31 @@ extension UIViewController {
             containerView.alpha = 0.8
         }
 
-        let activityIndicator = UIActivityIndicatorView(style: .large)
-
         view.addSubview(containerView)
-        containerView.addSubview(activityIndicator)
+        containerView.addSubview(spinner)
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        spinner.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            containerView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            containerView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            spinner.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
         ])
-        activityIndicator.startAnimating()
+        spinner.startAnimating()
     }
 
-    func dismissLoadingSpinner(with containerView: UIView) {
+    func dismissLoadingSpinner(with containerView: UIView, spinner: UIActivityIndicatorView) {
         DispatchQueue.main.async {
             containerView.removeFromSuperview()
+            spinner.stopAnimating()
         }
+    }
+    
+    func presentRepositoryOnSafari(with stringURL: String) {
+        guard let url = URL(string: stringURL) else { return }
+        let safariVC = SFSafariViewController(url: url)
+        safariVC.modalPresentationStyle = .popover
+        present(safariVC, animated: true)
     }
 }

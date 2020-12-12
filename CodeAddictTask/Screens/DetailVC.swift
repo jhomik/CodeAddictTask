@@ -9,7 +9,9 @@ import UIKit
 
 class DetailVC: UIViewController {
     
-    prefer
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     private(set) var activityIndicator = UIActivityIndicatorView()
     private(set) var containerView = UIView()
     private let detailView = DetailView()
@@ -90,6 +92,7 @@ class DetailVC: UIViewController {
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.view.backgroundColor = .clear
         view.backgroundColor = .systemBackground
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     private func configureDetailView() {

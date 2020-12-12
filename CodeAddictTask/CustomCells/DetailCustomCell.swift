@@ -10,10 +10,10 @@ import UIKit
 class DetailCustomCell: UITableViewCell {
     
     private let circleWithNumberView = CircleNumberView()
-    private let commitAuthorNameLabel = MainCustomLabel(size: 11, weight: .semibold)
+    private let commitAuthorNameLabel = MainCustomLabel(size: 11, weight: .semibold, color: UIColor.commitAuthorNameTitleColor)
     private let emailLabel = MainCustomLabel(size: 17, weight: .regular)
-    private let commitMessageLabel = MainCustomLabel(size: 17, weight: .regular)
-    var detailRepositories: DetailRepositories? {
+    private let commitMessageLabel = MainCustomLabel(size: 17, weight: .regular, color: UIColor.commitMessageTitleColor)
+    var listOfCommits: ListCommit? {
         didSet {
             updateCell()
         }
@@ -31,10 +31,10 @@ class DetailCustomCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func updateCell() {
-        commitAuthorNameLabel.text = "Jakub Homik"
-        emailLabel.text = "345@wp.pl"
-        commitMessageLabel.text = "dsfdsagaffdskfdfk kfdsjfsadkjf af asdkf sadkjf asdkjf kjabf kjasbf kas"
+    private func updateCell() {
+        commitAuthorNameLabel.text = listOfCommits?.commit.author.name
+        emailLabel.text = listOfCommits?.commit.author.email
+        commitMessageLabel.text = listOfCommits?.commit.message
     }
     
     private func configureCircleWithNumberView() {
@@ -49,8 +49,8 @@ class DetailCustomCell: UITableViewCell {
     }
     
     private func configureCommitAuthorNameLabel() {
-        self.addSubview(commitAuthorNameLabel)
         commitAuthorNameLabel.textColor = UIColor.commitAuthorNameTitleColor
+        self.addSubview(commitAuthorNameLabel)
         
         NSLayoutConstraint.activate([
             commitAuthorNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
@@ -72,13 +72,15 @@ class DetailCustomCell: UITableViewCell {
     }
     
     private func configureCommitMessageLabel() {
-        self.addSubview(commitMessageLabel)
         commitMessageLabel.textColor = UIColor.commitMessageTitleColor
+        commitMessageLabel.numberOfLines = 0
+        commitMessageLabel.lineBreakMode = .byTruncatingTail
+        self.addSubview(commitMessageLabel)
         
         NSLayoutConstraint.activate([
             commitMessageLabel.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 2),
             commitMessageLabel.leadingAnchor.constraint(equalTo: circleWithNumberView.trailingAnchor, constant: 20),
-            commitMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            commitMessageLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             commitMessageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
     }
