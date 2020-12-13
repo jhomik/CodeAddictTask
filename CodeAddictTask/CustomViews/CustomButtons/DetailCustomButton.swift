@@ -7,11 +7,11 @@
 
 import UIKit
 
-class DetailCustomButton: UIButton {
+final class DetailCustomButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
+        configureDetailCustomButton()
     }
     
     required init?(coder: NSCoder) {
@@ -25,11 +25,10 @@ class DetailCustomButton: UIButton {
         self.layer.cornerRadius = radius
     }
     
-    private func configure() {
+    private func configureDetailCustomButton() { 
         self.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = UIColor.detailCustomButtonBackgroundColor
         self.titleLabel?.textAlignment = .center
         self.setTitleColor(.detailCustomButtonTitleColor, for: .normal)
-        
     }
 }

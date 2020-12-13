@@ -7,14 +7,15 @@
 
 import UIKit
 
-class MainCustomCell: UITableViewCell {
+final class MainCustomCell: UITableViewCell {
     
     private let userAvatarImageView = UserAvatarImageView(frame: .zero)
     private let userRepositoryTitleLabel = MainCustomLabel(size: 17, weight: .semibold)
-    private let repositoryStarImageView = RepositoryStarImageView(frame: .zero)
+    private let repositoryStarImageView = UIImageView()
     private let numberOfRepositoryStarsLabel = MainCustomLabel()
-    private let disclosureIndicatorImageView = DisclosureIndicatorImageView(frame: .zero)
+    private let disclosureIndicatorImageView = UIImageView()
     private let networkManager = NetworkManager()
+    
     var repositories: Repositories? {
         didSet {
             updateCell()
@@ -49,7 +50,7 @@ class MainCustomCell: UITableViewCell {
     }
     
     private func configureUserAvataImageView() {
-        self.addSubview(userAvatarImageView)
+        contentView.addSubview(userAvatarImageView)
         userAvatarImageView.layer.cornerRadius = 10
         
         NSLayoutConstraint.activate([
@@ -61,18 +62,20 @@ class MainCustomCell: UITableViewCell {
     }
     
     private func configureUserRepositoryTitleLabel() {
-        self.addSubview(userRepositoryTitleLabel)
+        contentView.addSubview(userRepositoryTitleLabel)
         
         NSLayoutConstraint.activate([
             userRepositoryTitleLabel.topAnchor.constraint(equalTo: userAvatarImageView.topAnchor, constant: 10),
             userRepositoryTitleLabel.leadingAnchor.constraint(equalTo: userAvatarImageView.trailingAnchor, constant: 16),
-            userRepositoryTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 16),
+            userRepositoryTitleLabel.widthAnchor.constraint(equalToConstant: 207),
             userRepositoryTitleLabel.heightAnchor.constraint(equalToConstant: 22)
         ])
     }
     
     private func configureRepositoryStarImageView() {
-        self.addSubview(repositoryStarImageView)
+        repositoryStarImageView.image = Images.repositoryStarImage
+        contentView.addSubview(repositoryStarImageView)
+        repositoryStarImageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             repositoryStarImageView.topAnchor.constraint(equalTo: userRepositoryTitleLabel.bottomAnchor, constant: 4),
@@ -83,7 +86,7 @@ class MainCustomCell: UITableViewCell {
     }
     
     private func configureNumberOfRepositoryStarsLabel() {
-        self.addSubview(numberOfRepositoryStarsLabel)
+        contentView.addSubview(numberOfRepositoryStarsLabel)
         numberOfRepositoryStarsLabel.textColor = UIColor.numbersOfStarsColor
         
         NSLayoutConstraint.activate([
@@ -95,7 +98,9 @@ class MainCustomCell: UITableViewCell {
     }
     
     private func configureDisclosureIndicatorImage() {
-        self.addSubview(disclosureIndicatorImageView)
+        disclosureIndicatorImageView.image = Images.disclosureIndicatorImage
+        contentView.addSubview(disclosureIndicatorImageView)
+        disclosureIndicatorImageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             disclosureIndicatorImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 39),

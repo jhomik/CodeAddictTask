@@ -7,9 +7,9 @@
 
 import UIKit
 
-class CircleNumberView: UIView {
+final class CircleNumberView: UIView {
     
-    private let numberOfCommit = MainCustomLabel(size: 17, weight: .medium)
+    let numberOfCommit = MainCustomLabel(size: 17, weight: .medium)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,7 +35,6 @@ class CircleNumberView: UIView {
     private func configureNumberOfCommit() {
         self.addSubview(numberOfCommit)
         numberOfCommit.translatesAutoresizingMaskIntoConstraints = false
-        numberOfCommit.text = "1"
     
         NSLayoutConstraint.activate([
             numberOfCommit.centerYAnchor.constraint(equalTo: self.centerYAnchor),

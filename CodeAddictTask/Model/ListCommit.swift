@@ -7,20 +7,14 @@
 
 import Foundation
 
-// MARK: - ListCommit
-
 struct ListCommit: Codable {
     let commit: Commit
 }
-
-// MARK: - Commit
 
 struct Commit: Codable {
     let author: Author
     let message: String
 }
-
-// MARK: - Author
 
 struct Author: Codable {
     let name, email: String

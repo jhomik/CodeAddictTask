@@ -7,12 +7,13 @@
 
 import UIKit
 
-class DetailCustomCell: UITableViewCell {
+final class DetailCustomCell: UITableViewCell {
     
     private let circleWithNumberView = CircleNumberView()
     private let commitAuthorNameLabel = MainCustomLabel(size: 11, weight: .semibold, color: UIColor.commitAuthorNameTitleColor)
     private let emailLabel = MainCustomLabel(size: 17, weight: .regular)
     private let commitMessageLabel = MainCustomLabel(size: 17, weight: .regular, color: UIColor.commitMessageTitleColor)
+
     var listOfCommits: ListCommit? {
         didSet {
             updateCell()
@@ -21,6 +22,7 @@ class DetailCustomCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        configureDetailCustomCell()
         configureCircleWithNumberView()
         configureCommitAuthorNameLabel()
         configureEmailLabel()
@@ -31,43 +33,57 @@ class DetailCustomCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func configureDetailCustomCell() {
+        self.selectionStyle = .none
+    }
+    
     private func updateCell() {
         commitAuthorNameLabel.text = listOfCommits?.commit.author.name
         emailLabel.text = listOfCommits?.commit.author.email
         commitMessageLabel.text = listOfCommits?.commit.message
+        circleWithNumberView.numberOfCommit.text = "\(calculateCommitNumber())"
+    }
+    
+    private func calculateCommitNumber() -> Int {
+        var number = 0
+        for n in 1...3 {
+            number = n
+        }
+        
+        return number
     }
     
     private func configureCircleWithNumberView() {
-        self.addSubview(circleWithNumberView)
+        contentView.addSubview(circleWithNumberView)
         
         NSLayoutConstraint.activate([
             circleWithNumberView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 26),
             circleWithNumberView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             circleWithNumberView.widthAnchor.constraint(equalToConstant: 36),
-            circleWithNumberView.heightAnchor.constraint(equalToConstant: 36),
+            circleWithNumberView.heightAnchor.constraint(equalToConstant: 36)
         ])
     }
     
     private func configureCommitAuthorNameLabel() {
         commitAuthorNameLabel.textColor = UIColor.commitAuthorNameTitleColor
-        self.addSubview(commitAuthorNameLabel)
+        contentView.addSubview(commitAuthorNameLabel)
         
         NSLayoutConstraint.activate([
             commitAuthorNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             commitAuthorNameLabel.leadingAnchor.constraint(equalTo: circleWithNumberView.trailingAnchor, constant: 20),
             commitAuthorNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            commitAuthorNameLabel.heightAnchor.constraint(equalToConstant: 13),
+            commitAuthorNameLabel.heightAnchor.constraint(equalToConstant: 13)
         ])
     }
     
     private func configureEmailLabel() {
-        self.addSubview(emailLabel)
+        contentView.addSubview(emailLabel)
         
         NSLayoutConstraint.activate([
             emailLabel.topAnchor.constraint(equalTo: commitAuthorNameLabel.bottomAnchor, constant: 2),
             emailLabel.leadingAnchor.constraint(equalTo: circleWithNumberView.trailingAnchor, constant: 20),
             emailLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            emailLabel.heightAnchor.constraint(equalToConstant: 22),
+            emailLabel.heightAnchor.constraint(equalToConstant: 22)
         ])
     }
     
@@ -75,13 +91,14 @@ class DetailCustomCell: UITableViewCell {
         commitMessageLabel.textColor = UIColor.commitMessageTitleColor
         commitMessageLabel.numberOfLines = 0
         commitMessageLabel.lineBreakMode = .byTruncatingTail
-        self.addSubview(commitMessageLabel)
+        contentView.addSubview(commitMessageLabel)
         
         NSLayoutConstraint.activate([
             commitMessageLabel.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 2),
             commitMessageLabel.leadingAnchor.constraint(equalTo: circleWithNumberView.trailingAnchor, constant: 20),
-            commitMessageLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            commitMessageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            commitMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            commitMessageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+            commitMessageLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 44)
         ])
     }
 }

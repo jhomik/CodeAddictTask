@@ -7,13 +7,17 @@
 
 import UIKit
 
-class MainVC: UIViewController {
+final class MainVC: UIViewController {
     
+    private let networkManager = NetworkManager()
+    private let tableView = UITableView()
     private(set) var activityIndicator = UIActivityIndicatorView()
     private(set) var containerView = UIView()
-    private let tableView = UITableView()
-    private let networkManager = NetworkManager()
+    private(set) var hasMoreList = true
+    private(set) var page = 1
+    private(set) var searchWord = String()
     private(set) var cachedRepositories: [String:[Repositories]] = [:]
+    
     private(set) var filteredRepositories: [Repositories] = [] {
         didSet {
             tableView.reloadData()
@@ -23,8 +27,8 @@ class MainVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureMainVC()
-        configureSearchController()
         configureTableView()
+        configureSearchController()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,12 +37,14 @@ class MainVC: UIViewController {
     }
     
     private func configureNavigationBarMainVC() {
+        title = Constants.mainTitle
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.view.backgroundColor = .systemBackground
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.tintColor = .none
     }
     
     private func configureMainVC() {
-        title = Constants.mainTitle
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
     }
@@ -46,10 +52,33 @@ class MainVC: UIViewController {
     private func configureSearchController() {
         let searchController = UISearchController()
         searchController.searchBar.delegate = self
+        searchController.searchBar.searchTextField.clearButtonMode = .never
         searchController.searchBar.placeholder = Constants.searchForRepo
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
+    }
+    
+    private func searchForRepositories(withWord: String, page: Int) {
+        showLoadingSpinner(with: containerView, spinner: activityIndicator)
+        networkManager.searchRepositories(withWord: withWord, page: page, completion: { [weak self] (result) in
+            guard let self = self else { return }
+            self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
+            switch result {
+            case .success(let repositories):
+                if repositories.items.count == 0 { self.hasMoreList = false }
+                DispatchQueue.main.async {
+                    if self.filteredRepositories.isEmpty {
+                        self.filteredRepositories = repositories.items
+                        self.hasMoreList = true
+                    } else {
+                        self.filteredRepositories.append(contentsOf: repositories.items)
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
     }
     
     private func configureTableView() {
@@ -74,6 +103,18 @@ extension MainVC: UITableViewDelegate {
         let detailVC = DetailVC()
         detailVC.repositoryTitle = filteredRepositories[indexPath.section]
         navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        if offsetY > contentHeight - height {
+            guard hasMoreList else { return }
+            page += 1
+            searchForRepositories(withWord: searchWord, page: page)
+        }
     }
 }
 
@@ -119,34 +160,28 @@ extension MainVC: UITableViewDataSource {
 extension MainVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reload), object: searchBar)
-        perform(#selector(reload), with: searchBar, afterDelay: 0.5)
+        perform(#selector(reload), with: searchBar, afterDelay: 0.2)
     }
     
     @objc func reload(_ searchBar: UISearchBar) {
-        guard let query = searchBar.text, query.trimmingCharacters(in: .whitespaces) != "" else { return filteredRepositories.removeAll() }
-        showLoadingSpinner(with: containerView, spinner: activityIndicator)
-        if let previouslySearchedRepo = cachedRepositories[searchBar.text ?? ""] {
-            filteredRepositories = previouslySearchedRepo
-        } else {
-            networkManager.searchRepositories(withWord: query, completion: { [weak self] (result) in
-                guard let self = self else { return }
-                self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
-                switch result {
-                case .success(let repositories):
-                    print(repositories)
-                    DispatchQueue.main.async {
-                        self.filteredRepositories = repositories.items
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            })
-           }
+        view.endEditing(true)
+        guard let query = searchBar.text, query.trimmingCharacters(in: .whitespaces) != "" else { return filteredRepositories.removeAll()
+        }
+        searchWord = query
         print(query)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         filteredRepositories.removeAll()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        filteredRepositories.removeAll()
+        if let previouslySearchedRepo = cachedRepositories[searchBar.text ?? ""] {
+            filteredRepositories = previouslySearchedRepo
+        } else {
+            searchForRepositories(withWord: searchWord, page: page)
+        }
     }
 }
 

@@ -4,23 +4,26 @@
 //
 //  Created by Jakub Homik on 09/12/2020.
 //
+
+import UIKit
+
 protocol ViewOnlineButtonDelegate: AnyObject {
     func buttonTapped()
 }
 
-import UIKit
-
-class DetailView: UIView {
+final class DetailView: UIView {
     
     private let userAvatarImageView = UserAvatarImageView(frame: .zero)
     private let repositoryByLabel = MainCustomLabel(size: 15, weight: .semibold, color: UIColor.detailViewTitlesColor)
     private let repoAuthorNameLabel = MainCustomLabel(size: 28, weight: .bold, color: UIColor.detailViewTitlesColor)
     private let numberOfStarsLabel = MainCustomLabel(size: 13, weight: .regular, color: UIColor.detailViewTitlesColor)
-    private let repositoryStarFillImageView = RepositoryStarFillImageView(frame: .zero)
+    private let repositoryStarFillImageView = UIImageView()
     private let repositoryTitleLabel = MainCustomLabel(size: 17, weight: .semibold)
     private let viewOnlineButton = DetailCustomButton(radius: 17, fontSize: 15)
     private let commitsHistoryLabel = MainCustomLabel(size: 22, weight: .bold)
+    
     weak var delegate: ViewOnlineButtonDelegate?
+    
     var detailRepositories: DetailRepositories? {
         didSet {
             updateDetailRepositoriesView()
@@ -33,10 +36,10 @@ class DetailView: UIView {
         configureUserAvatarImageview()
         configureRepositoryByLabel()
         configureRepoAuthorNameLabel()
-        configureRepositoryStarImageView()
+        configureRepositoryStarFillImageView()
         configureNumberOfStarsLabel()
-        configureRepositoryTitleLabel()
         configureViewOnlineButton()
+        configureRepositoryTitleLabel()
         configureCommitsHistoryLabel()
     }
     
@@ -93,8 +96,10 @@ class DetailView: UIView {
         ])
     }
     
-    private func configureRepositoryStarImageView() {
+    private func configureRepositoryStarFillImageView() {
+        repositoryStarFillImageView.image = Images.repositoryStarFillImage
         userAvatarImageView.addSubview(repositoryStarFillImageView)
+        repositoryStarFillImageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             repositoryStarFillImageView.topAnchor.constraint(equalTo: repoAuthorNameLabel.bottomAnchor, constant: 9),
@@ -116,17 +121,6 @@ class DetailView: UIView {
         ])
     }
     
-    private func configureRepositoryTitleLabel() {
-        self.addSubview(repositoryTitleLabel)
-        
-        NSLayoutConstraint.activate([
-            repositoryTitleLabel.topAnchor.constraint(equalTo: userAvatarImageView.bottomAnchor, constant: 21),
-            repositoryTitleLabel.leadingAnchor.constraint(equalTo: repositoryByLabel.leadingAnchor),
-            repositoryTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            repositoryTitleLabel.heightAnchor.constraint(equalToConstant: 22)
-        ])
-    }
-    
     private func configureViewOnlineButton() {
         self.addSubview(viewOnlineButton)
         viewOnlineButton.addTarget(self, action: #selector(onlineButtonTapped), for: .touchUpInside)
@@ -134,7 +128,6 @@ class DetailView: UIView {
         NSLayoutConstraint.activate([
             viewOnlineButton.topAnchor.constraint(equalTo: userAvatarImageView.bottomAnchor, constant: 17),
             viewOnlineButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            viewOnlineButton.leadingAnchor.constraint(equalTo: repositoryTitleLabel.trailingAnchor, constant: 20),
             viewOnlineButton.widthAnchor.constraint(equalToConstant: 118),
             viewOnlineButton.heightAnchor.constraint(equalToConstant: 30)
         ])
@@ -142,6 +135,17 @@ class DetailView: UIView {
     
     @objc private func onlineButtonTapped() {
         delegate?.buttonTapped()
+    }
+    
+    private func configureRepositoryTitleLabel() {
+        self.addSubview(repositoryTitleLabel)
+        
+        NSLayoutConstraint.activate([
+            repositoryTitleLabel.topAnchor.constraint(equalTo: userAvatarImageView.bottomAnchor, constant: 21),
+            repositoryTitleLabel.leadingAnchor.constraint(equalTo: repositoryByLabel.leadingAnchor),
+            repositoryTitleLabel.trailingAnchor.constraint(equalTo: viewOnlineButton.leadingAnchor, constant: -15),
+            repositoryTitleLabel.heightAnchor.constraint(equalToConstant: 22)
+        ])
     }
     
     private func configureCommitsHistoryLabel() {

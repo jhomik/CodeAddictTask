@@ -7,13 +7,9 @@
 
 import Foundation
 
-// MARK: - RepositoriesResponse
-
 struct RepositoriesResponse: Decodable {
     var items: [Repositories]
 }
-
-// MARK: - Repositories
 
 struct Repositories: Decodable {
     let name: String
@@ -25,8 +21,6 @@ struct Repositories: Decodable {
         case stargazersCount = "stargazers_count"
     }
 }
-
-// MARK: - Owner
 
 struct Owner: Decodable {
     let avatarURL: String?

@@ -7,8 +7,6 @@
 
 import Foundation
 
-// MARK: - DetailRepositories
-
 struct DetailRepositories: Decodable {
     let name: String
     let owner: DetailOwner
@@ -21,8 +19,6 @@ struct DetailRepositories: Decodable {
         case htmlUrl = "html_url"
     }
 }
-
-// MARK: - Owner
 
 struct DetailOwner: Decodable {
     let login: String

@@ -18,4 +18,5 @@ struct Constants {
     static let shareRepo = "Share Repo"
     static let repoBy = "REPO BY"
     static let checkOutThisRepository = "Check out this repository: "
+    static let backButton = "Back"
 }

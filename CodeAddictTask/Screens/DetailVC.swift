@@ -7,23 +7,22 @@
 
 import UIKit
 
-class DetailVC: UIViewController {
+final class DetailVC: UIViewController {
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    private(set) var activityIndicator = UIActivityIndicatorView()
-    private(set) var containerView = UIView()
+    var repositoryTitle: Repositories?
     private let detailView = DetailView()
     private let tableView = UITableView()
     private let detailShareRepoView = DetailShareRepoView()
     private let networkManager = NetworkManager()
-    var repositoryTitle: Repositories?
+    private(set) var activityIndicator = UIActivityIndicatorView()
+    private(set) var containerView = UIView()
+    
     private(set) var detailRepositories: DetailRepositories? {
         didSet {
             updateUI()
         }
     }
+    
     private(set) var listCommits: [ListCommit] = [] {
         didSet {
             tableView.reloadData()
@@ -35,24 +34,25 @@ class DetailVC: UIViewController {
         configureDetailView()
         configureDetailShareRepoView()
         configureTableView()
-        
+        downloadRepositories()
+        downloadCommits()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureDetailVC()
-        downloadRepositories()
-        downloadCommits()
     }
     
     private func downloadRepositories() {
+        showLoadingSpinner(with: containerView, spinner: activityIndicator)
         networkManager.getRepositories(forOwner: repositoryTitle?.owner.login ?? "", repoName: repositoryTitle?.name ?? "") { [weak self] (result) in
             guard let self = self else { return }
+            self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
             switch result {
             case .success(let detailRepositories):
-                print(detailRepositories)
-                self.detailRepositories = detailRepositories
-                
+                DispatchQueue.main.async {
+                    self.detailRepositories = detailRepositories
+                }
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -60,10 +60,8 @@ class DetailVC: UIViewController {
     }
     
     private func downloadCommits() {
-        showLoadingSpinner(with: containerView, spinner: activityIndicator)
         networkManager.getListCommits(forOwner: repositoryTitle?.owner.login ?? "" , repoName: repositoryTitle?.name ?? "") { [weak self] (result) in
             guard let self = self else { return }
-            self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
             switch result {
             case .success(let commits):
                 DispatchQueue.main.async {
@@ -74,7 +72,7 @@ class DetailVC: UIViewController {
             }
         }
     }
-
+    
     private func shareRepository() {
         guard let detailRepo = detailRepositories, let url = URL(string: detailRepo.htmlUrl) else { return }
         let items: [Any] = [Constants.checkOutThisRepository + "\(detailRepo.name)", url]
@@ -84,6 +82,7 @@ class DetailVC: UIViewController {
     
     private func updateUI() {
         detailView.detailRepositories = detailRepositories
+        
     }
     
     private func configureDetailVC() {
@@ -92,7 +91,9 @@ class DetailVC: UIViewController {
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.view.backgroundColor = .clear
         view.backgroundColor = .systemBackground
-        setNeedsStatusBarAppearanceUpdate()
+        navigationController?.navigationBar.barStyle = .black
+        navigationController?.navigationBar.tintColor = UIColor.detailViewTitlesColor
+        navigationController?.navigationBar.topItem?.backButtonTitle = Constants.backButton
     }
     
     private func configureDetailView() {
@@ -109,9 +110,9 @@ class DetailVC: UIViewController {
     
     private func configureTableView() {
         view.addSubview(tableView)
-        tableView.delegate = self
         tableView.dataSource = self
         tableView.register(DetailCustomCell.self, forCellReuseIdentifier: Constants.detailCellReuseId)
+        tableView.estimatedRowHeight = 111
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         tableView.isScrollEnabled = false
@@ -137,21 +138,15 @@ class DetailVC: UIViewController {
     }
 }
 
-extension DetailVC: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 120
-//    }
-}
-
 extension DetailVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listCommits.count
     }
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.detailCellReuseId, for: indexPath) as? DetailCustomCell else { return UITableViewCell() }
         cell.listOfCommits = listCommits[indexPath.row]
@@ -159,7 +154,7 @@ extension DetailVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 89
+        return UITableView.automaticDimension
     }
 }
 
