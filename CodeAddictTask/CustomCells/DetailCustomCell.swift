@@ -9,7 +9,7 @@ import UIKit
 
 final class DetailCustomCell: UITableViewCell {
     
-    private let circleWithNumberView = CircleNumberView()
+    let circleWithNumberView = CircleNumberView()
     private let commitAuthorNameLabel = MainCustomLabel(size: 11, weight: .semibold, color: UIColor.commitAuthorNameTitleColor)
     private let emailLabel = MainCustomLabel(size: 17, weight: .regular)
     private let commitMessageLabel = MainCustomLabel(size: 17, weight: .regular, color: UIColor.commitMessageTitleColor)
@@ -41,18 +41,8 @@ final class DetailCustomCell: UITableViewCell {
         commitAuthorNameLabel.text = listOfCommits?.commit.author.name
         emailLabel.text = listOfCommits?.commit.author.email
         commitMessageLabel.text = listOfCommits?.commit.message
-        circleWithNumberView.numberOfCommit.text = "\(calculateCommitNumber())"
     }
-    
-    private func calculateCommitNumber() -> Int {
-        var number = 0
-        for n in 1...3 {
-            number = n
-        }
-        
-        return number
-    }
-    
+  
     private func configureCircleWithNumberView() {
         contentView.addSubview(circleWithNumberView)
         

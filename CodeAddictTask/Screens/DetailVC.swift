@@ -115,7 +115,12 @@ final class DetailVC: UIViewController {
         tableView.estimatedRowHeight = 111
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
-        tableView.isScrollEnabled = false
+        
+        if DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard {
+            tableView.isScrollEnabled = true
+        } else {
+            tableView.isScrollEnabled = false
+        }
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: detailView.bottomAnchor),
@@ -150,6 +155,7 @@ extension DetailVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.detailCellReuseId, for: indexPath) as? DetailCustomCell else { return UITableViewCell() }
         cell.listOfCommits = listCommits[indexPath.row]
+        cell.circleWithNumberView.numberOfCommit.text = "\(indexPath.row + 1)"
         return cell
     }
     

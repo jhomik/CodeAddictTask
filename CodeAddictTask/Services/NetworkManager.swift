@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NetworkManager {
+final class NetworkManager {
     
     private let baseURL = "https://api.github.com/"
     private let cache = NSCache<NSString, UIImage>()
@@ -74,7 +74,7 @@ class NetworkManager {
         task.resume()
     }
     
-    func getListCommits(forOwner: String, repoName: String, completion: @escaping (Result<[ListCommit], CustomErrors>) -> Void) {
+    func getListCommits(forOwner: String, repoName: String, completion: @escaping (Result<ListCommits, CustomErrors>) -> Void) {
         let endpointURL = "repos/\(forOwner)/\(repoName)/commits?page=1&per_page=3"
         guard let url = URL(string: baseURL + endpointURL) else {
             completion(.failure(.invalidRequest))
@@ -95,7 +95,7 @@ class NetworkManager {
             }
             do {
                 let decoder = JSONDecoder()
-                let listCommits = try decoder.decode([ListCommit].self, from: data)
+                let listCommits = try decoder.decode(ListCommits.self, from: data)
                 completion(.success(listCommits))
             } catch {
                 completion(.failure(.invalidData))

@@ -8,11 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		5A01B02C25869C060015EFA9 /* CustomErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A01B02B25869C060015EFA9 /* CustomErrors.swift */; };
+		5A01B03F258748D60015EFA9 /* DeviceTypesConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A01B03E258748D60015EFA9 /* DeviceTypesConstraint.swift */; };
+		5A01B052258760150015EFA9 /* DetailRepositoriesDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A01B051258760150015EFA9 /* DetailRepositoriesDataTest.swift */; };
+		5A01B05A258763030015EFA9 /* ListCommitDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A01B059258763030015EFA9 /* ListCommitDataTest.swift */; };
+		5A01B062258765620015EFA9 /* RepositoriesDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A01B061258765620015EFA9 /* RepositoriesDataTest.swift */; };
 		5A26474D2580CB0400803FF3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A26474C2580CB0400803FF3 /* AppDelegate.swift */; };
 		5A26474F2580CB0400803FF3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A26474E2580CB0400803FF3 /* SceneDelegate.swift */; };
 		5A2647562580CB0900803FF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A2647552580CB0900803FF3 /* Assets.xcassets */; };
 		5A2647592580CB0900803FF3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A2647572580CB0900803FF3 /* LaunchScreen.storyboard */; };
-		5A2647642580CB0900803FF3 /* CodeAddictTaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2647632580CB0900803FF3 /* CodeAddictTaskTests.swift */; };
 		5A26476F2580CB0900803FF3 /* CodeAddictTaskUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A26476E2580CB0900803FF3 /* CodeAddictTaskUITests.swift */; };
 		5AA2803F2580CEE90043FE26 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA2803E2580CEE90043FE26 /* MainVC.swift */; };
 		5AA280482580D0870043FE26 /* MainCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA280472580D0870043FE26 /* MainCustomCell.swift */; };
@@ -54,6 +57,10 @@
 
 /* Begin PBXFileReference section */
 		5A01B02B25869C060015EFA9 /* CustomErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomErrors.swift; sourceTree = "<group>"; };
+		5A01B03E258748D60015EFA9 /* DeviceTypesConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypesConstraint.swift; sourceTree = "<group>"; };
+		5A01B051258760150015EFA9 /* DetailRepositoriesDataTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRepositoriesDataTest.swift; sourceTree = "<group>"; };
+		5A01B059258763030015EFA9 /* ListCommitDataTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCommitDataTest.swift; sourceTree = "<group>"; };
+		5A01B061258765620015EFA9 /* RepositoriesDataTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesDataTest.swift; sourceTree = "<group>"; };
 		5A2647492580CB0400803FF3 /* CodeAddictTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeAddictTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A26474C2580CB0400803FF3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5A26474E2580CB0400803FF3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,7 +68,6 @@
 		5A2647582580CB0900803FF3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5A26475A2580CB0900803FF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A26475F2580CB0900803FF3 /* CodeAddictTaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeAddictTaskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5A2647632580CB0900803FF3 /* CodeAddictTaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeAddictTaskTests.swift; sourceTree = "<group>"; };
 		5A2647652580CB0900803FF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A26476A2580CB0900803FF3 /* CodeAddictTaskUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeAddictTaskUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A26476E2580CB0900803FF3 /* CodeAddictTaskUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeAddictTaskUITests.swift; sourceTree = "<group>"; };
@@ -154,7 +160,9 @@
 		5A2647622580CB0900803FF3 /* CodeAddictTaskTests */ = {
 			isa = PBXGroup;
 			children = (
-				5A2647632580CB0900803FF3 /* CodeAddictTaskTests.swift */,
+				5A01B061258765620015EFA9 /* RepositoriesDataTest.swift */,
+				5A01B051258760150015EFA9 /* DetailRepositoriesDataTest.swift */,
+				5A01B059258763030015EFA9 /* ListCommitDataTest.swift */,
 				5A2647652580CB0900803FF3 /* Info.plist */,
 			);
 			path = CodeAddictTaskTests;
@@ -193,6 +201,7 @@
 				5AA2804D2580D13C0043FE26 /* Constants.swift */,
 				5AA2806A2580EDFA0043FE26 /* Images.swift */,
 				5A01B02B25869C060015EFA9 /* CustomErrors.swift */,
+				5A01B03E258748D60015EFA9 /* DeviceTypesConstraint.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -419,6 +428,7 @@
 				5AA2807F2581023C0043FE26 /* UIColor+Extensions.swift in Sources */,
 				5AA280482580D0870043FE26 /* MainCustomCell.swift in Sources */,
 				5AA280B325821E010043FE26 /* DetailCustomButton.swift in Sources */,
+				5A01B03F258748D60015EFA9 /* DeviceTypesConstraint.swift in Sources */,
 				5AA280712580F5940043FE26 /* RepositoryHeaderView.swift in Sources */,
 				5AA280C625823CE20043FE26 /* Repositories.swift in Sources */,
 			);
@@ -428,7 +438,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A2647642580CB0900803FF3 /* CodeAddictTaskTests.swift in Sources */,
+				5A01B05A258763030015EFA9 /* ListCommitDataTest.swift in Sources */,
+				5A01B052258760150015EFA9 /* DetailRepositoriesDataTest.swift in Sources */,
+				5A01B062258765620015EFA9 /* RepositoriesDataTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
