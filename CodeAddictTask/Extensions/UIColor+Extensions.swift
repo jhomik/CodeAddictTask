@@ -34,7 +34,7 @@ extension UIColor {
     
     static var detailCustomButtonTitleColor = UIColor { (traitCollection: UITraitCollection) -> UIColor in
         if traitCollection.userInterfaceStyle == .dark {
-            return UIColor.systemGray
+            return UIColor(displayP3Red: 0/255, green: 122/255, blue: 255/255, alpha: 1)
         } else {
             return UIColor(displayP3Red: 0/255, green: 122/255, blue: 255/255, alpha: 1)
         }

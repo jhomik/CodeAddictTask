@@ -10,28 +10,30 @@ import SafariServices
 
 extension UIViewController {
     func showLoadingSpinner(with containerView: UIView, spinner: UIActivityIndicatorView) {
-        spinner.style = .large
-        containerView.backgroundColor = .systemBackground
-        containerView.alpha = 0
-
-        UIView.animate(withDuration: 0.25) {
-            containerView.alpha = 0.8
+        DispatchQueue.main.async {
+            spinner.style = .large
+            containerView.backgroundColor = .systemBackground
+            containerView.alpha = 0
+            
+            UIView.animate(withDuration: 0.25) {
+                containerView.alpha = 0.8
+            }
+            
+            self.view.addSubview(containerView)
+            containerView.addSubview(spinner)
+            containerView.translatesAutoresizingMaskIntoConstraints = false
+            spinner.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.activate([
+                containerView.widthAnchor.constraint(equalTo: self.view.widthAnchor),
+                containerView.heightAnchor.constraint(equalTo: self.view.heightAnchor),
+                spinner.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+                spinner.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            ])
+            spinner.startAnimating()
         }
-
-        view.addSubview(containerView)
-        containerView.addSubview(spinner)
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            containerView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            containerView.heightAnchor.constraint(equalTo: view.heightAnchor),
-            spinner.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-        ])
-        spinner.startAnimating()
     }
-
+    
     func dismissLoadingSpinner(with containerView: UIView, spinner: UIActivityIndicatorView) {
         DispatchQueue.main.async {
             containerView.removeFromSuperview()

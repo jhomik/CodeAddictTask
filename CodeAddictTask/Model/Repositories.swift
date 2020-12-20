@@ -12,7 +12,7 @@ struct RepositoriesResponse: Decodable {
 }
 
 struct Repositories: Decodable {
-    let name: String
+    let name: String 
     let owner: Owner
     let stargazersCount: Int
 
