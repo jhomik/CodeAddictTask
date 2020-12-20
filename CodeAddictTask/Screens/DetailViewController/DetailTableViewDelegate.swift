@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailTableViewDelegate: NSObject, UITableViewDelegate {
+final class DetailTableViewDelegate: NSObject, UITableViewDelegate {
     
     var viewModel: DetailViewModel
     

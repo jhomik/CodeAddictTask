@@ -8,7 +8,7 @@
 import UIKit
 
 final class DetailVC: UIViewController {
-
+    
     private let activityIndicator = UIActivityIndicatorView()
     private let containerView = UIView()
     
@@ -17,7 +17,7 @@ final class DetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.delegate = self
+        viewModel.detailDelegate = self
         detailView.viewOnlineTapped = self
         detailView.shareRepo = self
     }
@@ -47,8 +47,7 @@ final class DetailVC: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor.detailViewTitlesColor
         navigationController?.navigationBar.topItem?.backButtonTitle = Constants.backButton
     }
-    
-    }
+}
 
 extension DetailVC: ViewOnlineButtonDelegate {
     
@@ -69,7 +68,7 @@ extension DetailVC: DetailUpdateDelegate {
         presentAlert(title: title, message: message, buttonTitle: buttonTitle)
     }
     
-    func showloadingSpinner() {
+    func showLoadingSpinner() {
         showLoadingSpinner(with: containerView, spinner: activityIndicator)
     }
     

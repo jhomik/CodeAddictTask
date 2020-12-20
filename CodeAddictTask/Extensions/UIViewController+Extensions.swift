@@ -52,7 +52,9 @@ extension UIViewController {
     func presentAlert(title: String, message: String, buttonTitle: String) {
         DispatchQueue.main.async {
             let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: buttonTitle, style: .default, handler: nil))
+            alertVC.addAction(UIAlertAction(title: buttonTitle, style: .default, handler: { _ in
+                self.navigationController?.popViewController(animated: true)
+            }))
             self.present(alertVC, animated: true)
         }
     }

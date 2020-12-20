@@ -10,15 +10,14 @@ import UIKit
 final class MainVC: UIViewController {
     
     private let viewModel = MainViewModel()
-    lazy var mainSearchBarDelegate = MainSearchBarDelegate(viewModel: viewModel)
-    
     private let activityIndicator = UIActivityIndicatorView()
     private let containerView = UIView()
     
+    lazy var mainSearchBarDelegate = MainSearchBarDelegate(viewModel: viewModel)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        mainSearchBarDelegate.viewModel = viewModel
-        viewModel.delegate = self
+        viewModel.mainDelegate = self
         configureMainVC()
         configureSearchController()
     }
@@ -35,6 +34,7 @@ final class MainVC: UIViewController {
     private func configureNavigationBarMainVC() {
         title = Constants.mainTitle
         navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.view.backgroundColor = .systemBackground
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .none

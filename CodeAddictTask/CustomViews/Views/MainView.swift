@@ -18,7 +18,7 @@ final class MainView: UIView {
     init(viewModel: MainViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
-        viewModel.updateRepositories = self
+        viewModel.updateSearchRepositories = self
         configureTableView()
     }
     

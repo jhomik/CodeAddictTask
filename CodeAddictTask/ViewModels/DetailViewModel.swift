@@ -8,7 +8,7 @@
 import Foundation
 
 protocol DetailUpdateDelegate: AnyObject {
-    func showloadingSpinner()
+    func showLoadingSpinner()
     func hideLoadingSpinner()
     func presentAlertOnMainThread(title: String, message: String, buttonTitle: String)
 }
@@ -24,8 +24,8 @@ protocol UpdateDetailViewDelegate: AnyObject {
 final class DetailViewModel {
     
     private let networkManager = NetworkManager()
-    weak var delegate: DetailUpdateDelegate?
-    weak var reloadTableView: ReloadDetailTableViewDelegate?
+    weak var detailDelegate: DetailUpdateDelegate?
+    weak var updateCommitsMessages: ReloadDetailTableViewDelegate?
     weak var updateDetails: UpdateDetailViewDelegate?
     
     var repositoryTitle: Repositories? {
@@ -44,38 +44,36 @@ final class DetailViewModel {
     
     private(set) var listCommits: ListCommits = [] {
         didSet {
-            reloadTableView?.reloadTableView()
+            updateCommitsMessages?.reloadTableView()
         }
     }
     
     func downloadRepositories() {
-        delegate?.showloadingSpinner()
+        detailDelegate?.showLoadingSpinner()
         networkManager.getRepositories(forOwner: repositoryTitle?.owner.login ?? "", repoName: repositoryTitle?.name ?? "") { [weak self] (result) in
             guard let self = self else { return }
-            self.delegate?.hideLoadingSpinner()
+            self.detailDelegate?.hideLoadingSpinner()
             switch result {
             case .success(let detailRepositories):
                 DispatchQueue.main.async {
                     self.detailRepositories = detailRepositories
                 }
             case .failure(let error):
-                self.delegate?.presentAlertOnMainThread(title: "Something went wrong...", message: error.rawValue, buttonTitle: "Ok")
+                self.detailDelegate?.presentAlertOnMainThread(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
             }
         }
     }
     
     func downloadCommits() {
-        delegate?.showloadingSpinner()
         networkManager.getListCommits(forOwner: repositoryTitle?.owner.login ?? "" , repoName: repositoryTitle?.name ?? "") { [weak self] (result) in
             guard let self = self else { return }
-            self.delegate?.hideLoadingSpinner()
             switch result {
             case .success(let commits):
                 DispatchQueue.main.async {
                     self.listCommits = commits
                 }
             case .failure(let error):
-                self.delegate?.presentAlertOnMainThread(title: "Something went wrong...", message: error.rawValue, buttonTitle: "Ok")
+                self.detailDelegate?.presentAlertOnMainThread(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
             }
         }
     }

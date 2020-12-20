@@ -44,7 +44,7 @@ final class DetailView: UIView {
     init(viewModel: DetailViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
-        viewModel.reloadTableView = self
+        viewModel.updateCommitsMessages = self
         viewModel.updateDetails = self
         detailShareRepoView.delegate = self
         configureDetailView()

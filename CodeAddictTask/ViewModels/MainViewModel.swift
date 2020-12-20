@@ -21,8 +21,8 @@ protocol ReloadMainTableViewDelegate: AnyObject {
 final class MainViewModel {
     
     private let networkManager = NetworkManager()
-    weak var delegate: MainUpdateDelegate?
-    weak var updateRepositories: ReloadMainTableViewDelegate?
+    weak var mainDelegate: MainUpdateDelegate?
+    weak var updateSearchRepositories: ReloadMainTableViewDelegate?
 
     private(set) var currentPage = 1 {
         didSet {
@@ -38,7 +38,7 @@ final class MainViewModel {
     
     private(set) var filteredRepositories: [Repositories] = [] {
         didSet {
-            updateRepositories?.reloadTableView()
+            updateSearchRepositories?.reloadTableView()
         }
     }
     
@@ -65,14 +65,14 @@ final class MainViewModel {
     }
     
     func rowSelectedAt(indexPath: IndexPath) {
-        delegate?.pushDetailViewControler(with: filteredRepositories[indexPath.section])
+        mainDelegate?.pushDetailViewControler(with: filteredRepositories[indexPath.section])
     }
     
     func searchForRepositories() {
-        delegate?.showLoadingSpinner()
+        mainDelegate?.showLoadingSpinner()
         networkManager.searchRepositories(withWord: searchWord, page: currentPage) { [weak self] (result) in
             guard let self = self else { return }
-            self.delegate?.hideLoadingSpinner()
+            self.mainDelegate?.hideLoadingSpinner()
             switch result {
             case .success(let repositories):
                 DispatchQueue.main.async {
@@ -83,7 +83,7 @@ final class MainViewModel {
                     }
                 }
             case .failure(let error):
-                self.delegate?.presentAlertOnMainThread(title: "Something went wrong...", message: error.rawValue, buttonTitle: "Ok")
+                self.mainDelegate?.presentAlertOnMainThread(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
             }
         }
     }
