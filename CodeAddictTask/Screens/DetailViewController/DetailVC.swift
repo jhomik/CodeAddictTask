@@ -9,18 +9,13 @@ import UIKit
 
 final class DetailVC: UIViewController {
     
-    private let detailView = DetailView()
+    lazy var detailView = DetailView(viewModel: viewModel)
     private(set) var viewModel = DetailViewModel()
     private let activityIndicator = UIActivityIndicatorView()
     private let containerView = UIView()
-    private let tableView = UITableView()
-    private let detailTableViewDataSource = DetailTableViewDataSource()
-    private let detailTableViewDelegate = DetailTableViewDelegate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        detailTableViewDelegate.viewModel = viewModel
-        detailTableViewDataSource.viewModel = viewModel
         viewModel.delegate = self
         detailView.delegate = self
     }

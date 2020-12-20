@@ -9,7 +9,11 @@ import UIKit
 
 class MainSearchBarDelegate: NSObject, UISearchBarDelegate {
     
-    var viewModel = MainViewModel()
+    var viewModel: MainViewModel
+    
+    init(viewModel: MainViewModel) {
+        self.viewModel = viewModel
+    }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reload), object: searchBar)

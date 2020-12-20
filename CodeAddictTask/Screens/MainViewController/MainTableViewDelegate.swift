@@ -9,7 +9,11 @@ import UIKit
 
 class MainTableViewDelegate: NSObject, UITableViewDelegate {
     
-    var viewModel = MainViewModel()
+    var viewModel: MainViewModel
+    
+    init(viewModel: MainViewModel) {
+        self.viewModel = viewModel
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         return viewModel.rowSelectedAt(indexPath: indexPath)

@@ -9,7 +9,11 @@ import UIKit
 
 class DetailTableViewDataSource: NSObject, UITableViewDataSource {
     
-    var viewModel = DetailViewModel()
+    var viewModel: DetailViewModel
+    
+    init(viewModel: DetailViewModel) {
+        self.viewModel = viewModel
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.listCommits.count

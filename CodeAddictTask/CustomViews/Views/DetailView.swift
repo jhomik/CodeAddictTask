@@ -23,9 +23,10 @@ final class DetailView: UIView {
     private let commitsHistoryLabel = MainCustomLabel(size: 22, weight: .bold)
     private let tableView = UITableView()
     private let detailShareRepoView = DetailShareRepoView()
-    private(set) var viewModel = DetailViewModel()
-    private let detailTableViewDataSource = DetailTableViewDataSource()
-    private let detailTableViewDelegate = DetailTableViewDelegate()
+    private let viewModel: DetailViewModel
+    
+    lazy var detailTableViewDataSource = DetailTableViewDataSource(viewModel: viewModel)
+    lazy var detailTableViewDelegate = DetailTableViewDelegate(viewModel: viewModel)
     
     weak var delegate: ViewOnlineButtonDelegate?
     
@@ -34,12 +35,11 @@ final class DetailView: UIView {
             updateDetailRepositoriesView()
         }
     }
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    
+    init(viewModel: DetailViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         viewModel.reloadTableView = self
-        detailTableViewDelegate.viewModel = viewModel
-        detailTableViewDataSource.viewModel = viewModel
         configureDetailView()
         configureUserAvatarImageview()
         configureRepositoryByLabel()
@@ -51,7 +51,6 @@ final class DetailView: UIView {
         configureCommitsHistoryLabel()
         configureDetailShareRepoView()
         configureTableView()
-        self.tableView.reloadData()
     }
     
     required init?(coder: NSCoder) {

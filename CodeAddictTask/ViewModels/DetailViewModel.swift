@@ -25,11 +25,10 @@ class DetailViewModel {
     private let networkManager = NetworkManager()
     weak var delegate: DetailUpdateDelegate?
     weak var reloadTableView: ReloadDetailTableViewDelegate?
-//    private let detailView = DetailView()
     
     var repositoryTitle: Repositories? {
         didSet {
-//            downloadRepositories()
+            downloadRepositories()
             downloadCommits()
         }
     }

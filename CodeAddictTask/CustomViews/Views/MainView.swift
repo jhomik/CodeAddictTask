@@ -11,14 +11,12 @@ class MainView: UIView {
 
     private let tableView = UITableView()
     private let viewModel: MainViewModel
-    private let mainTableViewDataSource = MainTableViewDataSource()
-    private let mainTableViewDelegate = MainTableViewDelegate()
+    lazy var mainTableViewDataSource = MainTableViewDataSource(viewModel: viewModel)
+    lazy var mainTableViewDelegate = MainTableViewDelegate(viewModel: viewModel)
     
     init(viewModel: MainViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
-        mainTableViewDataSource.viewModel = viewModel
-        mainTableViewDelegate.viewModel = viewModel
         viewModel.updateRepositories = self
         configureTableView()
     }

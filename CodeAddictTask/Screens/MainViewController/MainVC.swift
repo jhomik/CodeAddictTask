@@ -10,7 +10,7 @@ import UIKit
 final class MainVC: UIViewController {
     
     private let viewModel = MainViewModel()
-    private let mainSearchBarDelegate = MainSearchBarDelegate()
+    lazy var mainSearchBarDelegate = MainSearchBarDelegate(viewModel: viewModel)
     private let activityIndicator = UIActivityIndicatorView()
     private let containerView = UIView()
     

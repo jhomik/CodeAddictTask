@@ -9,7 +9,11 @@ import UIKit
 
 class MainTableViewDataSource: NSObject, UITableViewDataSource {
     
-    var viewModel = MainViewModel()
+    var viewModel: MainViewModel
+    
+    init(viewModel: MainViewModel) {
+        self.viewModel = viewModel
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
