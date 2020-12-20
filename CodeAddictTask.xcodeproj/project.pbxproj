@@ -253,11 +253,11 @@
 		5AA2806F2580F2430043FE26 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5AB446AB258DC3770088ADB4 /* MainView.swift */,
 				5AA280952581130A0043FE26 /* DetailView.swift */,
 				5AA280702580F5940043FE26 /* RepositoryHeaderView.swift */,
 				5AA280AD258144E30043FE26 /* CircleNumberView.swift */,
 				5AA280BA25821ED50043FE26 /* DetailShareRepoView.swift */,
-				5AB446AB258DC3770088ADB4 /* MainView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainTableViewDataSource: NSObject, UITableViewDataSource {
+final class MainTableViewDataSource: NSObject, UITableViewDataSource {
     
     var viewModel: MainViewModel
     

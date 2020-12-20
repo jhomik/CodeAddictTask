@@ -20,11 +20,12 @@ protocol UpdateDetailViewDelegate: AnyObject {
     func updateUI(with details: DetailRepositories)
 }
 
-class DetailViewModel {
+final class DetailViewModel {
     
     private let networkManager = NetworkManager()
     weak var delegate: DetailUpdateDelegate?
     weak var reloadTableView: ReloadDetailTableViewDelegate?
+    weak var updateDetails: UpdateDetailViewDelegate?
     
     var repositoryTitle: Repositories? {
         didSet {
@@ -35,7 +36,8 @@ class DetailViewModel {
     
     private(set) var detailRepositories: DetailRepositories? {
         didSet {
-//            detailView.detailRepositories = detailRepositories
+            guard let detailRepos = detailRepositories else { return }
+            updateDetails?.updateUI(with: detailRepos)
         }
     }
     
@@ -62,8 +64,10 @@ class DetailViewModel {
     }
     
     func downloadCommits() {
+        delegate?.showloadingSpinner()
         networkManager.getListCommits(forOwner: repositoryTitle?.owner.login ?? "" , repoName: repositoryTitle?.name ?? "") { [weak self] (result) in
             guard let self = self else { return }
+            self.delegate?.hideLoadingSpinner()
             switch result {
             case .success(let commits):
                 DispatchQueue.main.async {

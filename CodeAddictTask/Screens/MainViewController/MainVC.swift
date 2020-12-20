@@ -11,6 +11,7 @@ final class MainVC: UIViewController {
     
     private let viewModel = MainViewModel()
     lazy var mainSearchBarDelegate = MainSearchBarDelegate(viewModel: viewModel)
+    
     private let activityIndicator = UIActivityIndicatorView()
     private let containerView = UIView()
     
@@ -40,7 +41,6 @@ final class MainVC: UIViewController {
     }
     
     private func configureMainVC() {
-//        view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainSearchBarDelegate: NSObject, UISearchBarDelegate {
+final class MainSearchBarDelegate: NSObject, UISearchBarDelegate {
     
     var viewModel: MainViewModel
     

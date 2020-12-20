@@ -7,10 +7,11 @@
 
 import UIKit
 
-class MainView: UIView {
+final class MainView: UIView {
 
     private let tableView = UITableView()
     private let viewModel: MainViewModel
+    
     lazy var mainTableViewDataSource = MainTableViewDataSource(viewModel: viewModel)
     lazy var mainTableViewDelegate = MainTableViewDelegate(viewModel: viewModel)
     

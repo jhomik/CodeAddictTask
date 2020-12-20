@@ -11,6 +11,10 @@ protocol ViewOnlineButtonDelegate: AnyObject {
     func buttonTapped()
 }
 
+protocol PassShareButtonDelegate: AnyObject {
+    func shareTapped()
+}
+
 final class DetailView: UIView {
     
     private let userAvatarImageView = UserAvatarImageView(frame: .zero)
@@ -28,7 +32,8 @@ final class DetailView: UIView {
     lazy var detailTableViewDataSource = DetailTableViewDataSource(viewModel: viewModel)
     lazy var detailTableViewDelegate = DetailTableViewDelegate(viewModel: viewModel)
     
-    weak var delegate: ViewOnlineButtonDelegate?
+    weak var viewOnlineTapped: ViewOnlineButtonDelegate?
+    weak var shareRepo: PassShareButtonDelegate?
     
     var detailRepositories: DetailRepositories? {
         didSet {
@@ -40,6 +45,8 @@ final class DetailView: UIView {
         self.viewModel = viewModel
         super.init(frame: .zero)
         viewModel.reloadTableView = self
+        viewModel.updateDetails = self
+        detailShareRepoView.delegate = self
         configureDetailView()
         configureUserAvatarImageview()
         configureRepositoryByLabel()
@@ -58,12 +65,10 @@ final class DetailView: UIView {
     }
     
     private func updateDetailRepositoriesView() {
-        DispatchQueue.main.async {
-            self.repositoryTitleLabel.text = self.detailRepositories?.name
-            self.repoAuthorNameLabel.text = self.detailRepositories?.owner.login
-            self.numberOfStarsLabel.text = String(self.detailRepositories?.stargazersCount ?? 0)
-            self.userAvatarImageView.downloadImage(fromUrl: self.detailRepositories?.owner.avatarURL ?? "")
-        }
+        repositoryTitleLabel.text = detailRepositories?.name
+        repoAuthorNameLabel.text = detailRepositories?.owner.login
+        numberOfStarsLabel.text = String(detailRepositories?.stargazersCount ?? 0)
+        userAvatarImageView.downloadImage(fromUrl: detailRepositories?.owner.avatarURL ?? "")
     }
     
     private func configureDetailView() {
@@ -110,7 +115,7 @@ final class DetailView: UIView {
         repositoryStarFillImageView.image = Images.repositoryStarFillImage
         userAvatarImageView.addSubview(repositoryStarFillImageView)
         repositoryStarFillImageView.translatesAutoresizingMaskIntoConstraints = false
-    
+        
         NSLayoutConstraint.activate([
             repositoryStarFillImageView.topAnchor.constraint(equalTo: repoAuthorNameLabel.bottomAnchor, constant: 9),
             repositoryStarFillImageView.leadingAnchor.constraint(equalTo: repositoryByLabel.leadingAnchor),
@@ -144,7 +149,7 @@ final class DetailView: UIView {
     }
     
     @objc private func onlineButtonTapped() {
-        delegate?.buttonTapped()
+        viewOnlineTapped?.buttonTapped()
     }
     
     private func configureRepositoryTitleLabel() {
@@ -212,6 +217,12 @@ extension DetailView: ReloadDetailTableViewDelegate {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+    }
+}
+
+extension DetailView: ShareRepoButtonDelegate {
+    func share() {
+        shareRepo?.shareTapped()
     }
 }
 

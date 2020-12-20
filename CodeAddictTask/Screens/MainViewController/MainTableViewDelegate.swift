@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainTableViewDelegate: NSObject, UITableViewDelegate {
+final class MainTableViewDelegate: NSObject, UITableViewDelegate {
     
     var viewModel: MainViewModel
     

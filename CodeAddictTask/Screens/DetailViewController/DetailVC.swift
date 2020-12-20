@@ -8,16 +8,18 @@
 import UIKit
 
 final class DetailVC: UIViewController {
-    
-    lazy var detailView = DetailView(viewModel: viewModel)
-    private(set) var viewModel = DetailViewModel()
+
     private let activityIndicator = UIActivityIndicatorView()
     private let containerView = UIView()
+    
+    private(set) var viewModel = DetailViewModel()
+    lazy var detailView = DetailView(viewModel: viewModel)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.delegate = self
-        detailView.delegate = self
+        detailView.viewOnlineTapped = self
+        detailView.shareRepo = self
     }
     
     override func loadView() {
@@ -49,20 +51,20 @@ final class DetailVC: UIViewController {
     }
 
 extension DetailVC: ViewOnlineButtonDelegate {
+    
     func buttonTapped() {
         guard let detailRepo = viewModel.detailRepositories else { return }
         presentRepositoryOnSafari(with: detailRepo.htmlUrl)
     }
 }
 
-extension DetailVC: ShareRepoButtonDelegate {
-    func share() {
+extension DetailVC: PassShareButtonDelegate {
+    func shareTapped() {
         shareRepository()
     }
 }
 
 extension DetailVC: DetailUpdateDelegate {
-    
     func showloadingSpinner() {
         showLoadingSpinner(with: containerView, spinner: activityIndicator)
     }

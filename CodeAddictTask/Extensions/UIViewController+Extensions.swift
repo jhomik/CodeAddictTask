@@ -9,6 +9,7 @@ import UIKit
 import SafariServices
 
 extension UIViewController {
+    
     func showLoadingSpinner(with containerView: UIView, spinner: UIActivityIndicatorView) {
         DispatchQueue.main.async {
             spinner.style = .large

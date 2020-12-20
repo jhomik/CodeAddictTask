@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIColor {
+    
     static var numbersOfStarsColor = UIColor { (traitCollection: UITraitCollection) -> UIColor in
         if traitCollection.userInterfaceStyle == .dark {
             return UIColor.systemGray

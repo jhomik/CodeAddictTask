@@ -17,7 +17,7 @@ protocol ReloadMainTableViewDelegate: AnyObject {
     func reloadTableView()
 }
 
-class MainViewModel {
+final class MainViewModel {
     
     private let networkManager = NetworkManager()
     weak var delegate: MainUpdateDelegate?
