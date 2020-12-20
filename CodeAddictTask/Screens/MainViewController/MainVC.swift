@@ -57,6 +57,10 @@ final class MainVC: UIViewController {
 
 extension MainVC: MainUpdateDelegate {
     
+    func presentAlertOnMainThread(title: String, message: String, buttonTitle: String) {
+        presentAlert(title: title, message: message, buttonTitle: buttonTitle)
+    }
+    
     func showLoadingSpinner() {
         showLoadingSpinner(with: containerView, spinner: activityIndicator)
     }

@@ -48,4 +48,12 @@ extension UIViewController {
         safariVC.modalPresentationStyle = .popover
         present(safariVC, animated: true)
     }
+    
+    func presentAlert(title: String, message: String, buttonTitle: String) {
+        DispatchQueue.main.async {
+            let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alertVC.addAction(UIAlertAction(title: buttonTitle, style: .default, handler: nil))
+            self.present(alertVC, animated: true)
+        }
+    }
 }

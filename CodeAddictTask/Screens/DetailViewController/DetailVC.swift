@@ -65,6 +65,10 @@ extension DetailVC: PassShareButtonDelegate {
 }
 
 extension DetailVC: DetailUpdateDelegate {
+    func presentAlertOnMainThread(title: String, message: String, buttonTitle: String) {
+        presentAlert(title: title, message: message, buttonTitle: buttonTitle)
+    }
+    
     func showloadingSpinner() {
         showLoadingSpinner(with: containerView, spinner: activityIndicator)
     }

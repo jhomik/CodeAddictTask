@@ -11,6 +11,7 @@ protocol MainUpdateDelegate: AnyObject {
     func showLoadingSpinner()
     func hideLoadingSpinner()
     func pushDetailViewControler(with repository: Repositories)
+    func presentAlertOnMainThread(title: String, message: String, buttonTitle: String)
 }
 
 protocol ReloadMainTableViewDelegate: AnyObject {
@@ -82,7 +83,7 @@ final class MainViewModel {
                     }
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                self.delegate?.presentAlertOnMainThread(title: "Something went wrong...", message: error.rawValue, buttonTitle: "Ok")
             }
         }
     }

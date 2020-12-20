@@ -10,6 +10,7 @@ import Foundation
 protocol DetailUpdateDelegate: AnyObject {
     func showloadingSpinner()
     func hideLoadingSpinner()
+    func presentAlertOnMainThread(title: String, message: String, buttonTitle: String)
 }
 
 protocol ReloadDetailTableViewDelegate: AnyObject {
@@ -58,7 +59,7 @@ final class DetailViewModel {
                     self.detailRepositories = detailRepositories
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                self.delegate?.presentAlertOnMainThread(title: "Something went wrong...", message: error.rawValue, buttonTitle: "Ok")
             }
         }
     }
@@ -74,7 +75,7 @@ final class DetailViewModel {
                     self.listCommits = commits
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                self.delegate?.presentAlertOnMainThread(title: "Something went wrong...", message: error.rawValue, buttonTitle: "Ok")
             }
         }
     }
