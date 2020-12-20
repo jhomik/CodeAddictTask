@@ -11,6 +11,10 @@ protocol ViewOnlineButtonDelegate: AnyObject {
     func buttonTapped()
 }
 
+protocol PassShareButtonDelegate: AnyObject {
+    func shareTapped()
+}
+
 final class DetailView: UIView {
     
     private let userAvatarImageView = UserAvatarImageView(frame: .zero)
@@ -21,17 +25,28 @@ final class DetailView: UIView {
     private let repositoryTitleLabel = MainCustomLabel(size: 17, weight: .semibold)
     private let viewOnlineButton = DetailCustomButton(radius: 17, fontSize: 15)
     private let commitsHistoryLabel = MainCustomLabel(size: 22, weight: .bold)
+    private let tableView = UITableView()
+    private let detailShareRepoView = DetailShareRepoView()
+    private let viewModel: DetailViewModel
     
-    weak var delegate: ViewOnlineButtonDelegate?
+    lazy var detailTableViewDataSource = DetailTableViewDataSource(viewModel: viewModel)
+    lazy var detailTableViewDelegate = DetailTableViewDelegate(viewModel: viewModel)
+    
+    weak var viewOnlineTapped: ViewOnlineButtonDelegate?
+    weak var shareRepo: PassShareButtonDelegate?
     
     var detailRepositories: DetailRepositories? {
         didSet {
             updateDetailRepositoriesView()
         }
     }
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    
+    init(viewModel: DetailViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
+        viewModel.updateCommitsMessages = self
+        viewModel.updateDetails = self
+        detailShareRepoView.delegate = self
         configureDetailView()
         configureUserAvatarImageview()
         configureRepositoryByLabel()
@@ -41,6 +56,8 @@ final class DetailView: UIView {
         configureViewOnlineButton()
         configureRepositoryTitleLabel()
         configureCommitsHistoryLabel()
+        configureDetailShareRepoView()
+        configureTableView()
     }
     
     required init?(coder: NSCoder) {
@@ -48,16 +65,14 @@ final class DetailView: UIView {
     }
     
     private func updateDetailRepositoriesView() {
-        DispatchQueue.main.async {
-            self.repositoryTitleLabel.text = self.detailRepositories?.name
-            self.repoAuthorNameLabel.text = self.detailRepositories?.owner.login
-            self.numberOfStarsLabel.text = String(self.detailRepositories?.stargazersCount ?? 0)
-            self.userAvatarImageView.downloadImage(fromUrl: self.detailRepositories?.owner.avatarURL ?? "")
-        }
+        repositoryTitleLabel.text = detailRepositories?.name
+        repoAuthorNameLabel.text = detailRepositories?.owner.login
+        numberOfStarsLabel.text = String(detailRepositories?.stargazersCount ?? 0)
+        userAvatarImageView.downloadImage(fromUrl: detailRepositories?.owner.avatarURL ?? "")
     }
     
     private func configureDetailView() {
-        self.translatesAutoresizingMaskIntoConstraints = false
+        self.backgroundColor = .systemBackground
     }
     
     private func configureUserAvatarImageview() {
@@ -134,7 +149,7 @@ final class DetailView: UIView {
     }
     
     @objc private func onlineButtonTapped() {
-        delegate?.buttonTapped()
+        viewOnlineTapped?.buttonTapped()
     }
     
     private func configureRepositoryTitleLabel() {
@@ -158,5 +173,61 @@ final class DetailView: UIView {
             commitsHistoryLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             commitsHistoryLabel.heightAnchor.constraint(equalToConstant: 28)
         ])
+    }
+    
+    private func configureDetailShareRepoView() {
+        self.addSubview(detailShareRepoView)
+        
+        NSLayoutConstraint.activate([
+            detailShareRepoView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            detailShareRepoView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            detailShareRepoView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            detailShareRepoView.heightAnchor.constraint(equalToConstant: 94)
+        ])
+    }
+    
+    private func configureTableView() {
+        self.addSubview(tableView)
+        tableView.dataSource = detailTableViewDataSource
+        tableView.delegate = detailTableViewDelegate
+        tableView.register(DetailCustomCell.self, forCellReuseIdentifier: Constants.detailCellReuseId)
+        tableView.estimatedRowHeight = 111
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
+        
+        if DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard {
+            tableView.isScrollEnabled = true
+        } else {
+            tableView.isScrollEnabled = false
+        }
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: commitsHistoryLabel.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: detailShareRepoView.topAnchor, constant: -24)
+        ])
+    }
+}
+
+extension DetailView: ReloadDetailTableViewDelegate {
+    func reloadTableView() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+}
+
+extension DetailView: ShareRepoButtonDelegate {
+    func share() {
+        shareRepo?.shareTapped()
+    }
+}
+
+extension DetailView: UpdateDetailViewDelegate {
+    func updateUI(with details: DetailRepositories) {
+        detailRepositories = details
     }
 }

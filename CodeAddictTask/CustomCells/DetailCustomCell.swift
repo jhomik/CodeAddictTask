@@ -38,9 +38,10 @@ final class DetailCustomCell: UITableViewCell {
     }
     
     private func updateCell() {
-        commitAuthorNameLabel.text = listOfCommits?.commit.author.name
-        emailLabel.text = listOfCommits?.commit.author.email
-        commitMessageLabel.text = listOfCommits?.commit.message
+        guard let commits = listOfCommits else { return }
+        commitAuthorNameLabel.text = commits.commit.author.name
+        emailLabel.text = commits.commit.author.email
+        commitMessageLabel.text = commits.commit.message
     }
   
     private func configureCircleWithNumberView() {

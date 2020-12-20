@@ -34,7 +34,6 @@ final class CircleNumberView: UIView {
     
     private func configureNumberOfCommit() {
         self.addSubview(numberOfCommit)
-        numberOfCommit.translatesAutoresizingMaskIntoConstraints = false
     
         NSLayoutConstraint.activate([
             numberOfCommit.centerYAnchor.constraint(equalTo: self.centerYAnchor),
