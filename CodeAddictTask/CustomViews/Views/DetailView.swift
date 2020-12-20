@@ -21,6 +21,11 @@ final class DetailView: UIView {
     private let repositoryTitleLabel = MainCustomLabel(size: 17, weight: .semibold)
     private let viewOnlineButton = DetailCustomButton(radius: 17, fontSize: 15)
     private let commitsHistoryLabel = MainCustomLabel(size: 22, weight: .bold)
+    private let tableView = UITableView()
+    private let detailShareRepoView = DetailShareRepoView()
+    private(set) var viewModel = DetailViewModel()
+    private let detailTableViewDataSource = DetailTableViewDataSource()
+    private let detailTableViewDelegate = DetailTableViewDelegate()
     
     weak var delegate: ViewOnlineButtonDelegate?
     
@@ -32,6 +37,9 @@ final class DetailView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        viewModel.reloadTableView = self
+        detailTableViewDelegate.viewModel = viewModel
+        detailTableViewDataSource.viewModel = viewModel
         configureDetailView()
         configureUserAvatarImageview()
         configureRepositoryByLabel()
@@ -41,6 +49,9 @@ final class DetailView: UIView {
         configureViewOnlineButton()
         configureRepositoryTitleLabel()
         configureCommitsHistoryLabel()
+        configureDetailShareRepoView()
+        configureTableView()
+        self.tableView.reloadData()
     }
     
     required init?(coder: NSCoder) {
@@ -57,7 +68,7 @@ final class DetailView: UIView {
     }
     
     private func configureDetailView() {
-        self.translatesAutoresizingMaskIntoConstraints = false
+        self.backgroundColor = .systemBackground
     }
     
     private func configureUserAvatarImageview() {
@@ -100,7 +111,7 @@ final class DetailView: UIView {
         repositoryStarFillImageView.image = Images.repositoryStarFillImage
         userAvatarImageView.addSubview(repositoryStarFillImageView)
         repositoryStarFillImageView.translatesAutoresizingMaskIntoConstraints = false
-        
+    
         NSLayoutConstraint.activate([
             repositoryStarFillImageView.topAnchor.constraint(equalTo: repoAuthorNameLabel.bottomAnchor, constant: 9),
             repositoryStarFillImageView.leadingAnchor.constraint(equalTo: repositoryByLabel.leadingAnchor),
@@ -158,5 +169,55 @@ final class DetailView: UIView {
             commitsHistoryLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             commitsHistoryLabel.heightAnchor.constraint(equalToConstant: 28)
         ])
+    }
+    
+    private func configureDetailShareRepoView() {
+        self.addSubview(detailShareRepoView)
+        
+        NSLayoutConstraint.activate([
+            detailShareRepoView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            detailShareRepoView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            detailShareRepoView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            detailShareRepoView.heightAnchor.constraint(equalToConstant: 94)
+        ])
+    }
+    
+    private func configureTableView() {
+        self.addSubview(tableView)
+        tableView.dataSource = detailTableViewDataSource
+        tableView.delegate = detailTableViewDelegate
+        tableView.register(DetailCustomCell.self, forCellReuseIdentifier: Constants.detailCellReuseId)
+        tableView.estimatedRowHeight = 111
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
+        
+        if DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard {
+            tableView.isScrollEnabled = true
+        } else {
+            tableView.isScrollEnabled = false
+        }
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: commitsHistoryLabel.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: detailShareRepoView.topAnchor, constant: -24)
+        ])
+    }
+}
+
+extension DetailView: ReloadDetailTableViewDelegate {
+    func reloadTableView() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+}
+
+extension DetailView: UpdateDetailViewDelegate {
+    func updateUI(with details: DetailRepositories) {
+        detailRepositories = details
     }
 }
