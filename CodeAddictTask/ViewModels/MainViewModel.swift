@@ -75,6 +75,9 @@ final class MainViewModel {
             self.mainDelegate?.hideLoadingSpinner()
             switch result {
             case .success(let repositories):
+                if repositories.items.isEmpty {
+                    self.mainDelegate?.presentAlertOnMainThread(title: Constants.somethingWentWrong, message: CustomErrors.noRepositoriesSearch.rawValue, buttonTitle: Constants.okTitle)
+                }
                 DispatchQueue.main.async {
                     if self.filteredRepositories.isEmpty {
                         self.filteredRepositories = repositories.items

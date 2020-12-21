@@ -17,7 +17,6 @@ final class DetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.detailDelegate = self
         detailView.viewOnlineTapped = self
         detailView.shareRepo = self
     }
@@ -29,6 +28,7 @@ final class DetailVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureDetailVC()
+        viewModel.detailDelegate = self
     }
     
     private func shareRepository() {
