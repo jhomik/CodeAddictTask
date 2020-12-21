@@ -29,13 +29,13 @@ final class DetailView: UIView {
     private let detailShareRepoView = DetailShareRepoView()
     private let viewModel: DetailViewModel
     
-    lazy var detailTableViewDataSource = DetailTableViewDataSource(viewModel: viewModel)
-    lazy var detailTableViewDelegate = DetailTableViewDelegate(viewModel: viewModel)
+    lazy private(set) var detailTableViewDataSource = DetailTableViewDataSource(viewModel: viewModel)
+    lazy private(set) var detailTableViewDelegate = DetailTableViewDelegate(viewModel: viewModel)
     
     weak var viewOnlineTapped: ViewOnlineButtonDelegate?
     weak var shareRepo: PassShareButtonDelegate?
     
-    var detailRepositories: DetailRepositories? {
+    private(set) var detailRepositories: DetailRepositories? {
         didSet {
             updateDetailRepositoriesView()
         }
@@ -213,6 +213,7 @@ final class DetailView: UIView {
 }
 
 extension DetailView: ReloadDetailTableViewDelegate {
+    
     func reloadTableView() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -221,12 +222,14 @@ extension DetailView: ReloadDetailTableViewDelegate {
 }
 
 extension DetailView: ShareRepoButtonDelegate {
+    
     func share() {
         shareRepo?.shareTapped()
     }
 }
 
 extension DetailView: UpdateDetailViewDelegate {
+    
     func updateUI(with details: DetailRepositories) {
         detailRepositories = details
     }

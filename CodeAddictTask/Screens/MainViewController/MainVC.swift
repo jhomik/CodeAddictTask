@@ -13,7 +13,7 @@ final class MainVC: UIViewController {
     private let activityIndicator = UIActivityIndicatorView()
     private let containerView = UIView()
     
-    lazy var mainSearchBarDelegate = MainSearchBarDelegate(viewModel: viewModel)
+    lazy private(set) var mainSearchBarDelegate = MainSearchBarDelegate(viewModel: viewModel)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +56,6 @@ final class MainVC: UIViewController {
 }
 
 extension MainVC: MainUpdateDelegate {
-    
     func presentAlertOnMainThread(title: String, message: String, buttonTitle: String) {
         presentAlert(title: title, message: message, buttonTitle: buttonTitle)
     }

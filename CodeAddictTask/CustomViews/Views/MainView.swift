@@ -8,7 +8,7 @@
 import UIKit
 
 final class MainView: UIView {
-
+    
     private let tableView = UITableView()
     private let viewModel: MainViewModel
     
@@ -44,6 +44,7 @@ final class MainView: UIView {
 }
 
 extension MainView: ReloadMainTableViewDelegate {
+    
     func reloadTableView() {
         DispatchQueue.main.async {
             self.tableView.reloadData()

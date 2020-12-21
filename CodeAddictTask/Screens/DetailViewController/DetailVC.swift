@@ -13,12 +13,13 @@ final class DetailVC: UIViewController {
     private let containerView = UIView()
     
     private(set) var viewModel = DetailViewModel()
-    lazy var detailView = DetailView(viewModel: viewModel)
+    lazy private(set) var detailView = DetailView(viewModel: viewModel)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         detailView.viewOnlineTapped = self
         detailView.shareRepo = self
+        viewModel.detailDelegate = self
     }
     
     override func loadView() {
@@ -28,7 +29,6 @@ final class DetailVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureDetailVC()
-        viewModel.detailDelegate = self
     }
     
     private func shareRepository() {
@@ -58,12 +58,14 @@ extension DetailVC: ViewOnlineButtonDelegate {
 }
 
 extension DetailVC: PassShareButtonDelegate {
+    
     func shareTapped() {
         shareRepository()
     }
 }
 
 extension DetailVC: DetailUpdateDelegate {
+    
     func presentAlertOnMainThread(title: String, message: String, buttonTitle: String) {
         presentAlert(title: title, message: message, buttonTitle: buttonTitle)
     }
