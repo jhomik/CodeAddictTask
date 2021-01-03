@@ -53,7 +53,7 @@ final class MainViewModel {
     }
     
     func currentIndexPath(_ indexPath: IndexPath) {
-        if indexPath.section == currentPage * 30 - 2 {
+        if indexPath.section == currentPage * 60 - 2 {
             currentPage += 1
         }
     }

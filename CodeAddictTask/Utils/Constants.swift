@@ -21,4 +21,5 @@ struct Constants {
     static let backButton = "Back"
     static let somethingWentWrong = "Something went wrong..."
     static let okTitle = "Ok"
+    static let noCommits = "Repository with no commits"
 }

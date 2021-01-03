@@ -49,8 +49,10 @@ final class DetailViewModel {
     }
     
     func downloadRepositories() {
+        detailDelegate?.showLoadingSpinner()
         networkManager.getRepositories(forOwner: repositoryTitle?.owner.login ?? "", repoName: repositoryTitle?.name ?? "") { [weak self] (result) in
             guard let self = self else { return }
+            self.detailDelegate?.hideLoadingSpinner()
             switch result {
             case .success(let detailRepositories):
                 DispatchQueue.main.async {
@@ -70,8 +72,8 @@ final class DetailViewModel {
                 DispatchQueue.main.async {
                     self.listCommits = commits
                 }
-            case .failure(let error):
-                self.detailDelegate?.presentAlertOnMainThread(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
+            case .failure:
+                print("Repositories with no commits")
             }
         }
     }
