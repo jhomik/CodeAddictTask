@@ -10,48 +10,35 @@ import XCTest
 
 class RepositoriesDataTest: XCTestCase {
 
-    var decoder: JSONDecoder!
-    var deserialized: RepositoriesResponse!
-    let response = """
-                           {
-                             "items": [
-                               {
-                                 "name": "pillReminder",
-                                 "owner": {
-                                   "login": "jhomik",
-                                   "avatar_url": "https://avatars3.githubusercontent.com/u/29075071?v=4"
-                                 },
-                                 "stargazers_count": 2
-                               }
-                             ]
-                           }
-                           """.data(using: .utf8)!
+    var networkManager: NetworkManager!
+    var withWord: String!
+    var page: Int!
     
+    func testFetchRepositories() {
+        let expect = expectation(description: "fetch repositories")
+        networkManager.searchRepositories(withWord: withWord, page: page) { (result) in
+            switch result {
+            case .success(let repositories):
+                XCTAssertNotNil(repositories)
+            case .failure(let error):
+                XCTAssertNil("Test fetch error: \(error.rawValue)")
+            }
+            expect.fulfill()
+        }
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+
     override func setUp() {
         super.setUp()
-        decoder = JSONDecoder()
-        deserialized = try! decoder.decode(RepositoriesResponse.self, from: response)
+        networkManager = NetworkManager()
+        withWord = "CodeAddictTask"
+        page = 0
     }
-    
+
     override func tearDown() {
-        decoder = nil
-        deserialized = nil
+        networkManager = nil
+        withWord = nil
+        page = nil
         super.tearDown()
-    }
-    
-    func testNameRepo() {
-        XCTAssert(deserialized.items[0].name == "pillReminder")
-    }
-    
-    func testAvatarUrlOwner() {
-        XCTAssert(deserialized.items[0].owner.avatarURL == "https://avatars3.githubusercontent.com/u/29075071?v=4")
-    }
-    
-    func testStarsNumbers() {
-        XCTAssert(deserialized.items[0].stargazersCount == 2)
-    }
-    
-    func testLoginOwner() {
-        XCTAssert(deserialized.items[0].owner.login == "jhomik")
     }
 }

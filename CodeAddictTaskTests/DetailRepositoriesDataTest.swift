@@ -10,49 +10,35 @@ import XCTest
 
 class DetailRepositoriesDataTest: XCTestCase {
 
-    var decoder: JSONDecoder!
-    var deserialized: DetailRepositories!
-    let response = """
-                           {
-                             "name": "CodeAddictTask",
-                             "owner": {
-                               "login": "jhomik",
-                               "avatar_url": "https://avatars3.githubusercontent.com/u/29075071?v=4"
-                             },
-                               "stargazers_count": 0,
-                               "html_url": "https://github.com/jhomik/CodeAddictTask"
-                           }
-                           """.data(using: .utf8)!
-    
+    var networkManager: NetworkManager!
+    var forOwner: String!
+    var repoName: String!
+
+    func testDetailRepositories() {
+        let expect = expectation(description: "fetch detail repositories")
+        networkManager.getRepositories(forOwner: forOwner, repoName: repoName) { (result) in
+            switch result {
+            case .success(let detailRepos):
+                XCTAssertNotNil(detailRepos)
+            case .failure(let error):
+                XCTAssertNil("Test error: \(error.rawValue)")
+            }
+            expect.fulfill()
+        }
+        waitForExpectations(timeout: 2, handler: nil)
+    }
+
     override func setUp() {
         super.setUp()
-        decoder = JSONDecoder()
-        deserialized = try! decoder.decode(DetailRepositories.self, from: response)
+        networkManager = NetworkManager()
+        forOwner = "jhomik"
+        repoName = "CodeAddictTask"
     }
-    
+
     override func tearDown() {
-        decoder = nil
-        deserialized = nil
+        networkManager = nil
+        forOwner = nil
+        repoName = nil
         super.tearDown()
-    }
-    
-    func testNameRepo() {
-        XCTAssert(deserialized.name == "CodeAddictTask")
-    }
-    
-    func testAvatarUrlOwner() {
-        XCTAssert(deserialized.owner.avatarURL == "https://avatars3.githubusercontent.com/u/29075071?v=4")
-    }
-    
-    func testStarsNumbers() {
-        XCTAssert(deserialized.stargazersCount == 0)
-    }
-    
-    func testLoginOwner() {
-        XCTAssert(deserialized.owner.login == "jhomik")
-    }
-    
-    func testRepoUrl() {
-        XCTAssert(deserialized.htmlUrl == "https://github.com/jhomik/CodeAddictTask")
     }
 }

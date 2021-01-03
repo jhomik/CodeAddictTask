@@ -9,44 +9,36 @@ import XCTest
 @testable import CodeAddictTask
 
 class ListCommitDataTest: XCTestCase {
-
-    var decoder: JSONDecoder!
-    var deserialized: ListCommits!
-    let response = """
-                           [
-                             {
-                               "commit": {
-                                 "author": {
-                                   "name": "Jakub",
-                                   "email": "jh.homik@gmail.com"
-                                 },
-                                 "message": "refactoring"
-                               }
-                             }
-                           ]
-                           """.data(using: .utf8)!
+    
+    var networkManager: NetworkManager!
+    var forOwner: String!
+    var repoName: String!
+    
+    func testFetchRepositories() {
+        let expect = expectation(description: "fetch commits repositories")
+        networkManager.getListCommits(forOwner: forOwner, repoName: repoName) { (result) in
+            switch result {
+            case .success(let commits):
+                XCTAssertNotNil(commits)
+            case .failure(let error):
+                XCTAssertNil("Test fetch error: \(error.rawValue)")
+            }
+            expect.fulfill()
+        }
+        waitForExpectations(timeout: 5, handler: nil)
+    }
     
     override func setUp() {
         super.setUp()
-        decoder = JSONDecoder()
-        deserialized = try! decoder.decode(ListCommits.self, from: response)
+        networkManager = NetworkManager()
+        forOwner = "jhomik"
+        repoName = "CodeAddictTask"
     }
     
     override func tearDown() {
-        decoder = nil
-        deserialized = nil
+        networkManager = nil
+        forOwner = nil
+        repoName = nil
         super.tearDown()
-    }
-    
-    func testCommitAuthorName() {
-        XCTAssert(deserialized[0].commit.author.name == "Jakub")
-    }
-    
-    func testAuthorEmail() {
-        XCTAssert(deserialized[0].commit.author.email == "jh.homik@gmail.com")
-    }
-    
-    func testCommitMessage() {
-        XCTAssert(deserialized[0].commit.message == "refactoring")
     }
 }
