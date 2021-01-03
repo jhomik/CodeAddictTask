@@ -73,7 +73,7 @@ final class DetailViewModel {
                     self.listCommits = commits
                 }
             case .failure:
-                print("Repositories with no commits")
+                print(Constants.noCommits)
             }
         }
     }
