@@ -23,10 +23,10 @@ final class MainViewModel {
     private let networkManager = NetworkManager()
     weak var mainDelegate: MainUpdateDelegate?
     weak var updateSearchRepositories: ReloadMainTableViewDelegate?
-
+    
     private(set) var currentPage = 1 {
         didSet {
-            searchForRepositories()
+            fetchMoreRepositories()
         }
     }
     
@@ -48,7 +48,7 @@ final class MainViewModel {
     
     func checkSearchBar(_ word: String?) {
         guard let query = word, query.trimmingCharacters(in: .whitespaces) != "" else { return filteredRepositories.removeAll()
-                }
+        }
         print(query)
     }
     
@@ -67,8 +67,9 @@ final class MainViewModel {
     func rowSelectedAt(indexPath: IndexPath) {
         mainDelegate?.pushDetailViewControler(with: filteredRepositories[indexPath.section])
     }
-    
+
     func searchForRepositories() {
+        currentPage = 1
         mainDelegate?.showLoadingSpinner()
         networkManager.searchRepositories(withWord: searchWord, page: currentPage) { [weak self] (result) in
             guard let self = self else { return }
@@ -77,15 +78,28 @@ final class MainViewModel {
             case .success(let repositories):
                 if repositories.items.isEmpty {
                     self.mainDelegate?.presentAlertOnMainThread(title: Constants.somethingWentWrong, message: CustomErrors.noRepositoriesSearch.rawValue, buttonTitle: Constants.okTitle)
-                }
-                DispatchQueue.main.async {
-                    if self.filteredRepositories.isEmpty {
+                } else {
+                    DispatchQueue.main.async {
                         self.filteredRepositories = repositories.items
-                    } else {
-                        self.filteredRepositories.append(contentsOf: repositories.items)
                     }
                 }
             case .failure(let error):
+                self.mainDelegate?.presentAlertOnMainThread(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
+            }
+        }
+    }
+    
+    func fetchMoreRepositories() {
+        mainDelegate?.showLoadingSpinner()
+        networkManager.searchRepositories(withWord: searchWord, page: currentPage) { [weak self] (result) in
+            guard let self = self else { return }
+            self.mainDelegate?.hideLoadingSpinner()
+            switch result {
+            case .success(let repositories):
+                DispatchQueue.main.async {
+                    self.filteredRepositories.append(contentsOf: repositories.items)
+                }
+            case.failure(let error):
                 self.mainDelegate?.presentAlertOnMainThread(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
             }
         }

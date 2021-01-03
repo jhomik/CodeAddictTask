@@ -49,10 +49,8 @@ final class DetailViewModel {
     }
     
     func downloadRepositories() {
-        detailDelegate?.showLoadingSpinner()
         networkManager.getRepositories(forOwner: repositoryTitle?.owner.login ?? "", repoName: repositoryTitle?.name ?? "") { [weak self] (result) in
             guard let self = self else { return }
-            self.detailDelegate?.hideLoadingSpinner()
             switch result {
             case .success(let detailRepositories):
                 DispatchQueue.main.async {

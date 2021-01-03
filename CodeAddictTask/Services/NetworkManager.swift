@@ -27,6 +27,7 @@ final class NetworkManager {
                 completion(.failure(.invalidResponse))
                 return
             }
+            print("MY RESPONSE: \(response)")
             guard let data = data else {
                 completion(.failure(.invalidData))
                 return
