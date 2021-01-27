@@ -13,9 +13,9 @@ protocol ShareRepoButtonDelegate: AnyObject {
 
 final class DetailShareRepoView: UIView {
     
-    private let shareRepoButton = DetailCustomButton(radius: 10, withTitle: nil, fontSize: 17)
+    private let shareRepoButton = DetailCustomButton(radius: Margines.shareRepoButtonCornerRadius, withTitle: nil, fontSize: Fonts.shareRepoButtonFontSize)
     private let shareRepoImageView = UIImageView()
-    private let shareRepoLabel = MainCustomLabel(size: 17, weight: .semibold, color: UIColor.detailCustomButtonTitleColor)
+    private let shareRepoLabel = MainCustomLabel(size: Fonts.shareRepoLabelFontSize, weight: .semibold, color: UIColor.detailCustomButtonTitleColor)
     
     weak var delegate: ShareRepoButtonDelegate?
 
@@ -40,10 +40,10 @@ final class DetailShareRepoView: UIView {
         shareRepoButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
 
         NSLayoutConstraint.activate([
-            shareRepoButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -44),
-            shareRepoButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            shareRepoButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            shareRepoButton.heightAnchor.constraint(equalToConstant: 50)
+            shareRepoButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: Margines.shareRepoButtonBottom),
+            shareRepoButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Margines.shareRepoButtonLeading),
+            shareRepoButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: Margines.shareRepoButtonTrailing),
+            shareRepoButton.heightAnchor.constraint(equalToConstant: Margines.shareRepoButtonHeight)
         ])
     }
     
@@ -58,9 +58,9 @@ final class DetailShareRepoView: UIView {
 
         NSLayoutConstraint.activate([
             shareRepoImageView.centerYAnchor.constraint(equalTo: shareRepoButton.centerYAnchor),
-            shareRepoImageView.leadingAnchor.constraint(equalTo: shareRepoButton.leadingAnchor, constant: 113),
-            shareRepoImageView.heightAnchor.constraint(equalToConstant: 18),
-            shareRepoImageView.widthAnchor.constraint(equalToConstant: 18)
+            shareRepoImageView.leadingAnchor.constraint(equalTo: shareRepoButton.leadingAnchor, constant: Margines.shareRepoImageViewLeading),
+            shareRepoImageView.heightAnchor.constraint(equalToConstant: Margines.shareRepoImageViewHeight),
+            shareRepoImageView.widthAnchor.constraint(equalToConstant: Margines.shareRepoImageViewWidth)
         ])
     }
     
@@ -71,9 +71,9 @@ final class DetailShareRepoView: UIView {
 
         NSLayoutConstraint.activate([
             shareRepoLabel.centerYAnchor.constraint(equalTo: shareRepoButton.centerYAnchor),
-            shareRepoLabel.leadingAnchor.constraint(equalTo: shareRepoImageView.trailingAnchor, constant: 9),
-            shareRepoLabel.heightAnchor.constraint(equalToConstant: 22),
-            shareRepoLabel.widthAnchor.constraint(equalToConstant: 92)
+            shareRepoLabel.leadingAnchor.constraint(equalTo: shareRepoImageView.trailingAnchor, constant: Margines.shareRepoLabelLeading),
+            shareRepoLabel.heightAnchor.constraint(equalToConstant: Margines.shareRepoLabelHeight),
+            shareRepoLabel.widthAnchor.constraint(equalToConstant: Margines.shareRepoLabelWidth)
         ])
     }
 }

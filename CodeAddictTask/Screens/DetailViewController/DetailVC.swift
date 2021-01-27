@@ -13,7 +13,7 @@ final class DetailVC: UIViewController {
     private let containerView = UIView()
     
     private(set) var viewModel = DetailViewModel()
-    lazy private(set) var detailView = DetailView(viewModel: viewModel)
+    lazy private(set) var detailView = DetailView(viewModel: viewModel) 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,16 +65,15 @@ extension DetailVC: PassShareButtonDelegate {
 }
 
 extension DetailVC: DetailUpdateDelegate {
+    func isLoading(_ loading: Bool) {
+        if loading {
+            showLoadingSpinner(with: containerView, spinner: activityIndicator)
+        } else {
+            dismissLoadingSpinner(with: containerView, spinner: activityIndicator)
+        }
+    }
     
-    func presentAlertOnMainThread(title: String, message: String, buttonTitle: String) {
+    func present(title: String, message: String, buttonTitle: String) {
         presentAlert(title: title, message: message, buttonTitle: buttonTitle)
-    }
-    
-    func showLoadingSpinner() {
-        showLoadingSpinner(with: containerView, spinner: activityIndicator)
-    }
-    
-    func hideLoadingSpinner() {
-        dismissLoadingSpinner(with: containerView, spinner: activityIndicator)
     }
 }

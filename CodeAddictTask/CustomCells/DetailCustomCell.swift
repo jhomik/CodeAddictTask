@@ -10,9 +10,9 @@ import UIKit
 final class DetailCustomCell: UITableViewCell {
     
     let circleWithNumberView = CircleNumberView()
-    private let commitAuthorNameLabel = MainCustomLabel(size: 11, weight: .semibold, color: UIColor.commitAuthorNameTitleColor)
-    private let emailLabel = MainCustomLabel(size: 17, weight: .regular)
-    private let commitMessageLabel = MainCustomLabel(size: 17, weight: .regular, color: UIColor.commitMessageTitleColor)
+    private let commitAuthorNameLabel = MainCustomLabel(size: Fonts.commitAuthorNameLabelFontSize, weight: .semibold, color: UIColor.commitAuthorNameTitleColor)
+    private let emailLabel = MainCustomLabel(size: Fonts.emailLabelFontSize, weight: .regular)
+    private let commitMessageLabel = MainCustomLabel(size: Fonts.commitMessageLabelFontSize, weight: .regular, color: UIColor.commitMessageTitleColor)
 
     var listOfCommits: ListCommit? {
         didSet {
@@ -48,10 +48,10 @@ final class DetailCustomCell: UITableViewCell {
         contentView.addSubview(circleWithNumberView)
         
         NSLayoutConstraint.activate([
-            circleWithNumberView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 26),
-            circleWithNumberView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            circleWithNumberView.widthAnchor.constraint(equalToConstant: 36),
-            circleWithNumberView.heightAnchor.constraint(equalToConstant: 36)
+            circleWithNumberView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Margines.circleWithNumberViewTop),
+            circleWithNumberView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Margines.circleWithNumberViewLeading),
+            circleWithNumberView.widthAnchor.constraint(equalToConstant: Margines.circleWithNumberViewWidth),
+            circleWithNumberView.heightAnchor.constraint(equalToConstant: Margines.circleWithNumberViewHeight)
         ])
     }
     
@@ -60,10 +60,10 @@ final class DetailCustomCell: UITableViewCell {
         contentView.addSubview(commitAuthorNameLabel)
         
         NSLayoutConstraint.activate([
-            commitAuthorNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            commitAuthorNameLabel.leadingAnchor.constraint(equalTo: circleWithNumberView.trailingAnchor, constant: 20),
-            commitAuthorNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            commitAuthorNameLabel.heightAnchor.constraint(equalToConstant: 13)
+            commitAuthorNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Margines.commitAuthorNameLabelTop),
+            commitAuthorNameLabel.leadingAnchor.constraint(equalTo: circleWithNumberView.trailingAnchor, constant: Margines.commitAuthorNameLabelLeading),
+            commitAuthorNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Margines.commitAuthorNameLabelTrailing),
+            commitAuthorNameLabel.heightAnchor.constraint(equalToConstant: Margines.commitAuthorNameLabelHeight)
         ])
     }
     
@@ -71,10 +71,10 @@ final class DetailCustomCell: UITableViewCell {
         contentView.addSubview(emailLabel)
         
         NSLayoutConstraint.activate([
-            emailLabel.topAnchor.constraint(equalTo: commitAuthorNameLabel.bottomAnchor, constant: 2),
-            emailLabel.leadingAnchor.constraint(equalTo: circleWithNumberView.trailingAnchor, constant: 20),
-            emailLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            emailLabel.heightAnchor.constraint(equalToConstant: 22)
+            emailLabel.topAnchor.constraint(equalTo: commitAuthorNameLabel.bottomAnchor, constant: Margines.emailLabelTop),
+            emailLabel.leadingAnchor.constraint(equalTo: circleWithNumberView.trailingAnchor, constant: Margines.emailLabelLeading),
+            emailLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Margines.emailLabelTrailing),
+            emailLabel.heightAnchor.constraint(equalToConstant: Margines.emailLabelHeight)
         ])
     }
     
@@ -85,11 +85,11 @@ final class DetailCustomCell: UITableViewCell {
         contentView.addSubview(commitMessageLabel)
         
         NSLayoutConstraint.activate([
-            commitMessageLabel.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 2),
-            commitMessageLabel.leadingAnchor.constraint(equalTo: circleWithNumberView.trailingAnchor, constant: 20),
-            commitMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            commitMessageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-            commitMessageLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 44)
+            commitMessageLabel.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: Margines.commitMessageLabelTop),
+            commitMessageLabel.leadingAnchor.constraint(equalTo: circleWithNumberView.trailingAnchor, constant: Margines.commitMessageLabelLeading),
+            commitMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Margines.commitMessageLabelTrailing),
+            commitMessageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Margines.commitMessageLabelBottom),
+            commitMessageLabel.heightAnchor.constraint(lessThanOrEqualToConstant: Margines.commitMessageLabelHeight)
         ])
     }
 }
