@@ -9,19 +9,19 @@ import Foundation
 
 protocol SearchRepositoriesEventDelegate: AnyObject {
     func isLoading(_ loading: Bool)
-    func pushDetailViewControler(with repository: Repositories)
-    func presentAlertOnMainThread(title: String, message: String, buttonTitle: String)
+    func push(with repository: Repositories)
+    func present(title: String, message: String, buttonTitle: String)
 }
 
-protocol ReloadMainTableViewDelegate: AnyObject {
-    func reloadTableView()
+protocol ReloadSearchRepositoriesDelegate: AnyObject {
+    func reload()
 }
 
 final class SearchRepositoriesViewModel {
     
     private let networkManager = NetworkManager()
     weak var searchRepositoriesDelegate: SearchRepositoriesEventDelegate?
-    weak var updateSearchRepositories: ReloadMainTableViewDelegate?
+    weak var updateSearchRepositories: ReloadSearchRepositoriesDelegate?
     
     private(set) var currentPage = 1 {
         didSet {
@@ -37,7 +37,7 @@ final class SearchRepositoriesViewModel {
     
     private(set) var filteredRepositories: [Repositories] = [] {
         didSet {
-            updateSearchRepositories?.reloadTableView()
+            updateSearchRepositories?.reload()
         }
     }
     
@@ -64,7 +64,7 @@ final class SearchRepositoriesViewModel {
     }
     
     func rowSelectedAt(indexPath: IndexPath) {
-        searchRepositoriesDelegate?.pushDetailViewControler(with: filteredRepositories[indexPath.section])
+        searchRepositoriesDelegate?.push(with: filteredRepositories[indexPath.section])
     }
 
     func searchForRepositories() {
@@ -76,14 +76,14 @@ final class SearchRepositoriesViewModel {
             switch result {
             case .success(let repositories):
                 if repositories.items.isEmpty {
-                    self.searchRepositoriesDelegate?.presentAlertOnMainThread(title: Constants.somethingWentWrong, message: CustomErrors.noRepositoriesSearch.rawValue, buttonTitle: Constants.okTitle)
+                    self.searchRepositoriesDelegate?.present(title: Constants.somethingWentWrong, message: CustomErrors.noRepositoriesSearch.rawValue, buttonTitle: Constants.okTitle)
                 } else {
                     DispatchQueue.main.async {
                         self.filteredRepositories = repositories.items
                     }
                 }
             case .failure(let error):
-                self.searchRepositoriesDelegate?.presentAlertOnMainThread(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
+                self.searchRepositoriesDelegate?.present(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
             }
         }
     }
@@ -99,7 +99,7 @@ final class SearchRepositoriesViewModel {
                     self.filteredRepositories.append(contentsOf: repositories.items)
                 }
             case.failure(let error):
-                self.searchRepositoriesDelegate?.presentAlertOnMainThread(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
+                self.searchRepositoriesDelegate?.present(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
             }
         }
     }

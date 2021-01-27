@@ -1,5 +1,5 @@
 //
-//  MainVC.swift
+//  SearchRepositoriesViewController.swift
 //  CodeAddictTask
 //
 //  Created by Jakub Homik on 09/12/2020.
@@ -7,17 +7,17 @@
 
 import UIKit
 
-final class MainVC: UIViewController {
+final class SearchRepositoriesViewController: UIViewController {
     
-    private let viewModel = MainViewModel()
+    private let viewModel = SearchRepositoriesViewModel()
     private let activityIndicator = UIActivityIndicatorView()
     private let containerView = UIView()
     
-    lazy private(set) var mainSearchBarDelegate = MainSearchBarDelegate(viewModel: viewModel)
+    lazy private(set) var searchRepositoriesSearchBarDelegate = SearchRepositoriesSearchBarDelegate(viewModel: viewModel)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.mainDelegate = self
+        viewModel.searchRepositoriesDelegate = self
         configureMainVC()
         configureSearchController()
     }
@@ -28,7 +28,7 @@ final class MainVC: UIViewController {
     }
     
     override func loadView() {
-        self.view = MainView(viewModel: viewModel)
+        self.view = SearchRepositoriesView(viewModel: viewModel)
     }
     
     private func configureNavigationBarMainVC() {
@@ -46,7 +46,7 @@ final class MainVC: UIViewController {
     
     private func configureSearchController() {
         let searchController = UISearchController()
-        searchController.searchBar.delegate = mainSearchBarDelegate
+        searchController.searchBar.delegate = searchRepositoriesSearchBarDelegate
         searchController.searchBar.searchTextField.clearButtonMode = .never
         searchController.searchBar.placeholder = Constants.searchForRepo
         searchController.obscuresBackgroundDuringPresentation = false
@@ -55,20 +55,20 @@ final class MainVC: UIViewController {
     }
 }
 
-extension MainVC: MainUpdateDelegate {
-    func presentAlertOnMainThread(title: String, message: String, buttonTitle: String) {
+extension SearchRepositoriesViewController: SearchRepositoriesEventDelegate {
+    func isLoading(_ loading: Bool) {
+        if loading {
+            showLoadingSpinner(with: containerView, spinner: activityIndicator)
+        } else {
+            dismissLoadingSpinner(with: containerView, spinner: activityIndicator)
+        }
+    }
+    
+    func present(title: String, message: String, buttonTitle: String) {
         presentAlert(title: title, message: message, buttonTitle: buttonTitle)
     }
     
-    func showLoadingSpinner() {
-        showLoadingSpinner(with: containerView, spinner: activityIndicator)
-    }
-    
-    func hideLoadingSpinner() {
-        dismissLoadingSpinner(with: containerView, spinner: activityIndicator)
-    }
-    
-    func pushDetailViewControler(with repository: Repositories) {
+    func push(with repository: Repositories) {
         let detailVC = DetailVC()
         detailVC.viewModel.repositoryTitle = repository
         navigationController?.pushViewController(detailVC, animated: true)
