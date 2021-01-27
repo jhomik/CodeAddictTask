@@ -9,7 +9,7 @@ import UIKit
 
 final class CircleNumberView: UIView {
     
-    let numberOfCommit = MainCustomLabel(size: 17, weight: .medium)
+    let numberOfCommit = MainCustomLabel(size: Fonts.numberOfCommitFontSize, weight: .medium)
 
     override init(frame: CGRect) {
         super.init(frame: frame)

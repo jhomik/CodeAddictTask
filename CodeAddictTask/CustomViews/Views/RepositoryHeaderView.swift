@@ -9,7 +9,7 @@ import UIKit
 
 final class RepositoryHeaderView: UIView {
     
-    private let repositoryTitleLabel = MainCustomLabel(size: 22, weight: .bold)
+    private let repositoryTitleLabel = MainCustomLabel(size: Fonts.headerViewRepositoryTitleLabelFontSize, weight: .bold)
 
     override init(frame: CGRect) {
         super.init(frame: frame)

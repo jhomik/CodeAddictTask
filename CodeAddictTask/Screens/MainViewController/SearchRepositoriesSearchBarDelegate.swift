@@ -1,5 +1,5 @@
 //
-//  MainSearchBarDelegate.swift
+//  SearchRepositoriesSearchBarDelegate.swift
 //  CodeAddictTask
 //
 //  Created by Jakub Homik on 17/12/2020.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class MainSearchBarDelegate: NSObject, UISearchBarDelegate {
+final class SearchRepositoriesSearchBarDelegate: NSObject, UISearchBarDelegate {
     
-    var viewModel: MainViewModel
+    var viewModel: SearchRepositoriesViewModel
     
-    init(viewModel: MainViewModel) {
+    init(viewModel: SearchRepositoriesViewModel) {
         self.viewModel = viewModel
     }
     

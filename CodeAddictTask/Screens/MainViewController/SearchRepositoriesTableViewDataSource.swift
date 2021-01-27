@@ -1,5 +1,5 @@
 //
-//  MainTableViewDataSource.swift
+//  SearchRepositoriesTableViewDataSource.swift
 //  CodeAddictTask
 //
 //  Created by Jakub Homik on 17/12/2020.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class MainTableViewDataSource: NSObject, UITableViewDataSource {
+final class SearchRepositoriesTableViewDataSource: NSObject, UITableViewDataSource {
     
-    var viewModel: MainViewModel
+    var viewModel: SearchRepositoriesViewModel
     
-    init(viewModel: MainViewModel) {
+    init(viewModel: SearchRepositoriesViewModel) {
         self.viewModel = viewModel
     }
     
@@ -24,7 +24,7 @@ final class MainTableViewDataSource: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.mainCellReuseId, for: indexPath) as? MainCustomCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.mainCellReuseId, for: indexPath) as? SearchRepositoriesCustomCell else { return UITableViewCell() }
         
         viewModel.currentIndexPath(indexPath)
         cell.repositories = viewModel.filteredRepositories[indexPath.section]

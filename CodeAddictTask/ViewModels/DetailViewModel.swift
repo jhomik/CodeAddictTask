@@ -8,24 +8,23 @@
 import Foundation
 
 protocol DetailUpdateDelegate: AnyObject {
-    func showLoadingSpinner()
-    func hideLoadingSpinner()
-    func presentAlertOnMainThread(title: String, message: String, buttonTitle: String)
+    func isLoading(_ loading: Bool)
+    func onErrorAlert(title: String, message: String, buttonTitle: String)
 }
 
-protocol ReloadDetailTableViewDelegate: AnyObject {
-    func reloadTableView()
+protocol ReloadDetailDelegate: AnyObject {
+    func reload()
 }
 
 protocol UpdateDetailViewDelegate: AnyObject {
-    func updateUI(with details: DetailRepositories)
+    func update(with details: DetailRepositories)
 }
 
 final class DetailViewModel {
     
     private let networkManager = NetworkManager()
     weak var detailDelegate: DetailUpdateDelegate?
-    weak var updateCommitsMessages: ReloadDetailTableViewDelegate?
+    weak var updateCommitsMessages: ReloadDetailDelegate?
     weak var updateDetails: UpdateDetailViewDelegate?
     
     var repositoryTitle: Repositories? {
@@ -38,28 +37,28 @@ final class DetailViewModel {
     private(set) var detailRepositories: DetailRepositories? {
         didSet {
             guard let detailRepos = detailRepositories else { return }
-            updateDetails?.updateUI(with: detailRepos)
+            updateDetails?.update(with: detailRepos)
         }
     }
     
     private(set) var listCommits: ListCommits = [] {
         didSet {
-            updateCommitsMessages?.reloadTableView()
+            updateCommitsMessages?.reload()
         }
     }
     
     func downloadRepositories() {
-        detailDelegate?.showLoadingSpinner()
+        detailDelegate?.isLoading(true)
         networkManager.getRepositories(forOwner: repositoryTitle?.owner.login ?? "", repoName: repositoryTitle?.name ?? "") { [weak self] (result) in
             guard let self = self else { return }
-            self.detailDelegate?.hideLoadingSpinner()
+            self.detailDelegate?.isLoading(false)
             switch result {
             case .success(let detailRepositories):
                 DispatchQueue.main.async {
                     self.detailRepositories = detailRepositories
                 }
             case .failure(let error):
-                self.detailDelegate?.presentAlertOnMainThread(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
+                self.detailDelegate?.onErrorAlert(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
             }
         }
     }
