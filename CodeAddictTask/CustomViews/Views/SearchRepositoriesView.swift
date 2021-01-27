@@ -19,11 +19,16 @@ final class SearchRepositoriesView: UIView {
         self.viewModel = viewModel
         super.init(frame: .zero)
         viewModel.updateSearchRepositories = self
+        configureSearchRepositoriesView()
         configureTableView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func configureSearchRepositoriesView() {
+        self.backgroundColor = .systemBackground
     }
     
     private func configureTableView() {
