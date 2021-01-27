@@ -9,7 +9,7 @@ import Foundation
 
 protocol DetailUpdateDelegate: AnyObject {
     func isLoading(_ loading: Bool)
-    func present(title: String, message: String, buttonTitle: String)
+    func onErrorAlert(title: String, message: String, buttonTitle: String)
 }
 
 protocol ReloadDetailDelegate: AnyObject {
@@ -58,7 +58,7 @@ final class DetailViewModel {
                     self.detailRepositories = detailRepositories
                 }
             case .failure(let error):
-                self.detailDelegate?.present(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
+                self.detailDelegate?.onErrorAlert(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
             }
         }
     }

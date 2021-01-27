@@ -73,7 +73,7 @@ extension DetailVC: DetailUpdateDelegate {
         }
     }
     
-    func present(title: String, message: String, buttonTitle: String) {
+    func onErrorAlert(title: String, message: String, buttonTitle: String) {
         presentAlert(title: title, message: message, buttonTitle: buttonTitle)
     }
 }

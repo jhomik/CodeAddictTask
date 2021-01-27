@@ -9,8 +9,8 @@ import Foundation
 
 protocol SearchRepositoriesEventDelegate: AnyObject {
     func isLoading(_ loading: Bool)
-    func push(with repository: Repositories)
-    func present(title: String, message: String, buttonTitle: String)
+    func didSelect(with repository: Repositories)
+    func onErrorAlert(title: String, message: String, buttonTitle: String)
 }
 
 protocol ReloadSearchRepositoriesDelegate: AnyObject {
@@ -52,7 +52,7 @@ final class SearchRepositoriesViewModel {
     }
     
     func currentIndexPath(_ indexPath: IndexPath) {
-        if indexPath.section == currentPage * 60 - 2 {
+        if indexPath.section == currentPage * Constants.numberOfRepositories - 2 {
             currentPage += 1
         }
     }
@@ -64,7 +64,7 @@ final class SearchRepositoriesViewModel {
     }
     
     func rowSelectedAt(indexPath: IndexPath) {
-        searchRepositoriesDelegate?.push(with: filteredRepositories[indexPath.section])
+        searchRepositoriesDelegate?.didSelect(with: filteredRepositories[indexPath.section])
     }
 
     func searchForRepositories() {
@@ -76,14 +76,14 @@ final class SearchRepositoriesViewModel {
             switch result {
             case .success(let repositories):
                 if repositories.items.isEmpty {
-                    self.searchRepositoriesDelegate?.present(title: Constants.somethingWentWrong, message: CustomErrors.noRepositoriesSearch.rawValue, buttonTitle: Constants.okTitle)
+                    self.searchRepositoriesDelegate?.onErrorAlert(title: Constants.somethingWentWrong, message: CustomErrors.noRepositoriesSearch.rawValue, buttonTitle: Constants.okTitle)
                 } else {
                     DispatchQueue.main.async {
                         self.filteredRepositories = repositories.items
                     }
                 }
             case .failure(let error):
-                self.searchRepositoriesDelegate?.present(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
+                self.searchRepositoriesDelegate?.onErrorAlert(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
             }
         }
     }
@@ -99,7 +99,7 @@ final class SearchRepositoriesViewModel {
                     self.filteredRepositories.append(contentsOf: repositories.items)
                 }
             case.failure(let error):
-                self.searchRepositoriesDelegate?.present(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
+                self.searchRepositoriesDelegate?.onErrorAlert(title: Constants.somethingWentWrong, message: error.rawValue, buttonTitle: Constants.okTitle)
             }
         }
     }

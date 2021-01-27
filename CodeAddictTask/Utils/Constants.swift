@@ -22,4 +22,5 @@ struct Constants {
     static let somethingWentWrong = "Something went wrong..."
     static let okTitle = "Ok"
     static let noCommits = "Repository with no commits"
+    static let numberOfRepositories: Int = 60
 }

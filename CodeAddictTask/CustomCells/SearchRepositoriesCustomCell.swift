@@ -45,19 +45,19 @@ final class SearchRepositoriesCustomCell: UITableViewCell {
     
     private func configureSearchRepositoriesCustomCell() {
         self.clipsToBounds = true
-        self.layer.cornerRadius = Margines.searchRepositoriesCustomCellCornerRadius
+        self.layer.cornerRadius = Margins.searchRepositoriesCustomCellCornerRadius
         self.backgroundColor = UIColor.cellBackgroundColor
     }
     
     private func configureUserAvataImageView() {
         contentView.addSubview(userAvatarImageView)
-        userAvatarImageView.layer.cornerRadius = Margines.searchRepositoriesUserAvatarImageViewCornerRadius
+        userAvatarImageView.layer.cornerRadius = Margins.searchRepositoriesUserAvatarImageViewCornerRadius
         
         NSLayoutConstraint.activate([
-            userAvatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Margines.searchRepositoriesUserAvatarImageViewTop),
-            userAvatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Margines.searchRepositoriesUserAvatarImageViewLeading),
-            userAvatarImageView.widthAnchor.constraint(equalToConstant: Margines.searchRepositoriesUserAvatarImageViewWidth),
-            userAvatarImageView.heightAnchor.constraint(equalToConstant: Margines.searchRepositoriesUserAvatarImageViewHeight)
+            userAvatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Margins.searchRepositoriesUserAvatarImageViewTop),
+            userAvatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Margins.searchRepositoriesUserAvatarImageViewLeading),
+            userAvatarImageView.widthAnchor.constraint(equalToConstant: Margins.searchRepositoriesUserAvatarImageViewWidth),
+            userAvatarImageView.heightAnchor.constraint(equalToConstant: Margins.searchRepositoriesUserAvatarImageViewHeight)
         ])
     }
     
@@ -65,10 +65,10 @@ final class SearchRepositoriesCustomCell: UITableViewCell {
         contentView.addSubview(userRepositoryTitleLabel)
         
         NSLayoutConstraint.activate([
-            userRepositoryTitleLabel.topAnchor.constraint(equalTo: userAvatarImageView.topAnchor, constant: Margines.userRepositoryTitleLabelTop),
-            userRepositoryTitleLabel.leadingAnchor.constraint(equalTo: userAvatarImageView.trailingAnchor, constant: Margines.userRepositoryTitleLabelLeading),
-            userRepositoryTitleLabel.widthAnchor.constraint(equalToConstant: Margines.userRepositoryTitleLabelWidth),
-            userRepositoryTitleLabel.heightAnchor.constraint(equalToConstant: Margines.userRepositoryTitleLabelHeight)
+            userRepositoryTitleLabel.topAnchor.constraint(equalTo: userAvatarImageView.topAnchor, constant: Margins.userRepositoryTitleLabelTop),
+            userRepositoryTitleLabel.leadingAnchor.constraint(equalTo: userAvatarImageView.trailingAnchor, constant: Margins.userRepositoryTitleLabelLeading),
+            userRepositoryTitleLabel.widthAnchor.constraint(equalToConstant: Margins.userRepositoryTitleLabelWidth),
+            userRepositoryTitleLabel.heightAnchor.constraint(equalToConstant: Margins.userRepositoryTitleLabelHeight)
         ])
     }
     
@@ -78,10 +78,10 @@ final class SearchRepositoriesCustomCell: UITableViewCell {
         repositoryStarImageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            repositoryStarImageView.topAnchor.constraint(equalTo: userRepositoryTitleLabel.bottomAnchor, constant: Margines.repositoryStarImageViewTop),
-            repositoryStarImageView.leadingAnchor.constraint(equalTo: userAvatarImageView.trailingAnchor, constant: Margines.repositoryStarImageViewLeading),
-            repositoryStarImageView.heightAnchor.constraint(equalToConstant: Margines.repositoryStarImageViewHeight),
-            repositoryStarImageView.widthAnchor.constraint(equalToConstant: Margines.repositoryStarImageViewWidth)
+            repositoryStarImageView.topAnchor.constraint(equalTo: userRepositoryTitleLabel.bottomAnchor, constant: Margins.repositoryStarImageViewTop),
+            repositoryStarImageView.leadingAnchor.constraint(equalTo: userAvatarImageView.trailingAnchor, constant: Margins.repositoryStarImageViewLeading),
+            repositoryStarImageView.heightAnchor.constraint(equalToConstant: Margins.repositoryStarImageViewHeight),
+            repositoryStarImageView.widthAnchor.constraint(equalToConstant: Margins.repositoryStarImageViewWidth)
         ])
     }
     
@@ -91,9 +91,9 @@ final class SearchRepositoriesCustomCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             numberOfRepositoryStarsLabel.topAnchor.constraint(equalTo: userRepositoryTitleLabel.bottomAnchor),
-            numberOfRepositoryStarsLabel.leadingAnchor.constraint(equalTo: repositoryStarImageView.trailingAnchor, constant: Margines.numberOfRepositoryStarsLabelLeading),
-            numberOfRepositoryStarsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Margines.numberOfRepositoryStarsLabelTrailing),
-            numberOfRepositoryStarsLabel.heightAnchor.constraint(equalToConstant: Margines.numberOfRepositoryStarsLabelHeight)
+            numberOfRepositoryStarsLabel.leadingAnchor.constraint(equalTo: repositoryStarImageView.trailingAnchor, constant: Margins.numberOfRepositoryStarsLabelLeading),
+            numberOfRepositoryStarsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Margins.numberOfRepositoryStarsLabelTrailing),
+            numberOfRepositoryStarsLabel.heightAnchor.constraint(equalToConstant: Margins.numberOfRepositoryStarsLabelHeight)
         ])
     }
     
@@ -103,10 +103,10 @@ final class SearchRepositoriesCustomCell: UITableViewCell {
         disclosureIndicatorImageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            disclosureIndicatorImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Margines.disclosureIndicatorImageViewTop),
-            disclosureIndicatorImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: Margines.disclosureIndicatorImageViewTrailing),
-            disclosureIndicatorImageView.widthAnchor.constraint(equalToConstant: Margines.disclosureIndicatorImageViewWidth),
-            disclosureIndicatorImageView.heightAnchor.constraint(equalToConstant: Margines.disclosureIndicatorImageViewHeight)
+            disclosureIndicatorImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Margins.disclosureIndicatorImageViewTop),
+            disclosureIndicatorImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: Margins.disclosureIndicatorImageViewTrailing),
+            disclosureIndicatorImageView.widthAnchor.constraint(equalToConstant: Margins.disclosureIndicatorImageViewWidth),
+            disclosureIndicatorImageView.heightAnchor.constraint(equalToConstant: Margins.disclosureIndicatorImageViewHeight)
         ])
     }
 }

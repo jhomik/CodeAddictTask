@@ -64,11 +64,11 @@ extension SearchRepositoriesViewController: SearchRepositoriesEventDelegate {
         }
     }
     
-    func present(title: String, message: String, buttonTitle: String) {
+    func onErrorAlert(title: String, message: String, buttonTitle: String) {
         presentAlert(title: title, message: message, buttonTitle: buttonTitle)
     }
     
-    func push(with repository: Repositories) {
+    func didSelect(with repository: Repositories) {
         let detailVC = DetailVC()
         detailVC.viewModel.repositoryTitle = repository
         navigationController?.pushViewController(detailVC, animated: true)

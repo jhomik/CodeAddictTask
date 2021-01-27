@@ -21,15 +21,15 @@ final class SearchRepositoriesTableViewDelegate: NSObject, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return Margines.searchRepositoriesTableViewRowHeight
+        return Margins.searchRepositoriesTableViewRowHeight
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case 0:
-            return Margines.searchRepositoriesTableViewSectionHeightHeader
+            return Margins.searchRepositoriesTableViewSectionHeightHeader
         default:
-            return Margines.searchRepositoriesTableViewSectionDefaultHeight
+            return Margins.searchRepositoriesTableViewSectionDefaultHeight
         }
     }
     

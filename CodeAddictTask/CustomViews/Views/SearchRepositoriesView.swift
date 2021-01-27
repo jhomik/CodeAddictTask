@@ -41,8 +41,8 @@ final class SearchRepositoriesView: UIView {
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: self.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Margines.searchRepositoriesTableViewLeading),
-            tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: Margines.searchRepositoriesTableViewTrailing),
+            tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Margins.searchRepositoriesTableViewLeading),
+            tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: Margins.searchRepositoriesTableViewTrailing),
             tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }

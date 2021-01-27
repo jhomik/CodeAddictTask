@@ -12,7 +12,7 @@ final class NetworkManager {
     private let baseURL = "https://api.github.com/"
     
     func searchRepositories(withWord: String, page: Int, completion: @escaping (Result<RepositoriesResponse, CustomErrors>) -> Void) {
-        let endpointURL = "search/repositories?q=\(withWord)&per_page=60&page=\(page)"
+        let endpointURL = "search/repositories?q=\(withWord)&per_page=\(Constants.numberOfRepositories)&page=\(page)"
         guard let url = URL(string: baseURL + endpointURL) else {
             completion(.failure(.invalidRequest))
             return

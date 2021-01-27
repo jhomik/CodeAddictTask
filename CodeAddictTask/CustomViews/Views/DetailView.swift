@@ -23,7 +23,7 @@ final class DetailView: UIView {
     private let numberOfStarsLabel = MainCustomLabel(size: Fonts.numberOfStarsLabelFontSize, weight: .regular, color: UIColor.detailViewTitlesColor)
     private let repositoryStarFillImageView = UIImageView()
     private let repositoryTitleLabel = MainCustomLabel(size: Fonts.repositoryTitleLabelFontSize, weight: .semibold)
-    private let viewOnlineButton = DetailCustomButton(radius: Margines.viewOnlineButtonCornerRadius, fontSize: Fonts.viewOnlineButtonFontSize)
+    private let viewOnlineButton = DetailCustomButton(radius: Margins.viewOnlineButtonCornerRadius, fontSize: Fonts.viewOnlineButtonFontSize)
     private let commitsHistoryLabel = MainCustomLabel(size: Fonts.commitsHistoryLabelFontSize, weight: .bold)
     private let tableView = UITableView()
     private let detailShareRepoView = DetailShareRepoView()
@@ -80,23 +80,23 @@ final class DetailView: UIView {
         userAvatarImageView.contentMode = .scaleAspectFill
         
         NSLayoutConstraint.activate([
-            userAvatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: Margines.detailViewUserAvatarImageViewTop),
+            userAvatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: Margins.detailViewUserAvatarImageViewTop),
             userAvatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             userAvatarImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            userAvatarImageView.heightAnchor.constraint(equalToConstant: Margines.detailViewUserAvatarImageViewHeight)
+            userAvatarImageView.heightAnchor.constraint(equalToConstant: Margins.detailViewUserAvatarImageViewHeight)
         ])
     }
     
     private func configureRepositoryByLabel() {
         userAvatarImageView.addSubview(repositoryByLabel)
         repositoryByLabel.text = Constants.repoBy
-        repositoryByLabel.alpha = Margines.repositoryByLabelAlpha
+        repositoryByLabel.alpha = Margins.repositoryByLabelAlpha
         
         NSLayoutConstraint.activate([
-            repositoryByLabel.topAnchor.constraint(equalTo: self.topAnchor,constant: Margines.repositoryByLabelTop),
-            repositoryByLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Margines.repositoryByLabelLeading),
-            repositoryByLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: Margines.repositoryByLabelTrailing),
-            repositoryByLabel.heightAnchor.constraint(equalToConstant: Margines.repositoryByLabelHeight)
+            repositoryByLabel.topAnchor.constraint(equalTo: self.topAnchor,constant: Margins.repositoryByLabelTop),
+            repositoryByLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Margins.repositoryByLabelLeading),
+            repositoryByLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: Margins.repositoryByLabelTrailing),
+            repositoryByLabel.heightAnchor.constraint(equalToConstant: Margins.repositoryByLabelHeight)
         ])
     }
     
@@ -104,10 +104,10 @@ final class DetailView: UIView {
         userAvatarImageView.addSubview(repoAuthorNameLabel)
         
         NSLayoutConstraint.activate([
-            repoAuthorNameLabel.topAnchor.constraint(equalTo: repositoryByLabel.bottomAnchor, constant: Margines.repoAuthorNameLabelTop),
+            repoAuthorNameLabel.topAnchor.constraint(equalTo: repositoryByLabel.bottomAnchor, constant: Margins.repoAuthorNameLabelTop),
             repoAuthorNameLabel.leadingAnchor.constraint(equalTo: repositoryByLabel.leadingAnchor),
             repoAuthorNameLabel.trailingAnchor.constraint(equalTo: repositoryByLabel.trailingAnchor),
-            repoAuthorNameLabel.heightAnchor.constraint(equalToConstant: Margines.repoAuthorNameLabelHeight)
+            repoAuthorNameLabel.heightAnchor.constraint(equalToConstant: Margins.repoAuthorNameLabelHeight)
         ])
     }
     
@@ -117,22 +117,22 @@ final class DetailView: UIView {
         repositoryStarFillImageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            repositoryStarFillImageView.topAnchor.constraint(equalTo: repoAuthorNameLabel.bottomAnchor, constant: Margines.repositoryStarFillImageViewTop),
+            repositoryStarFillImageView.topAnchor.constraint(equalTo: repoAuthorNameLabel.bottomAnchor, constant: Margins.repositoryStarFillImageViewTop),
             repositoryStarFillImageView.leadingAnchor.constraint(equalTo: repositoryByLabel.leadingAnchor),
-            repositoryStarFillImageView.widthAnchor.constraint(equalToConstant: Margines.repositoryStarFillImageViewWidth),
-            repositoryStarFillImageView.heightAnchor.constraint(equalToConstant: Margines.repositoryStarFillImageViewHeight)
+            repositoryStarFillImageView.widthAnchor.constraint(equalToConstant: Margins.repositoryStarFillImageViewWidth),
+            repositoryStarFillImageView.heightAnchor.constraint(equalToConstant: Margins.repositoryStarFillImageViewHeight)
         ])
     }
     
     private func configureNumberOfStarsLabel() {
         userAvatarImageView.addSubview(numberOfStarsLabel)
-        numberOfStarsLabel.alpha = Margines.numberOfStarsLabelAlpha
+        numberOfStarsLabel.alpha = Margins.numberOfStarsLabelAlpha
         
         NSLayoutConstraint.activate([
-            numberOfStarsLabel.topAnchor.constraint(equalTo: repoAuthorNameLabel.bottomAnchor, constant: Margines.numberOfStarsLabelTop),
-            numberOfStarsLabel.leadingAnchor.constraint(equalTo: repositoryStarFillImageView.trailingAnchor, constant: Margines.numberOfStarsLabelLeading),
+            numberOfStarsLabel.topAnchor.constraint(equalTo: repoAuthorNameLabel.bottomAnchor, constant: Margins.numberOfStarsLabelTop),
+            numberOfStarsLabel.leadingAnchor.constraint(equalTo: repositoryStarFillImageView.trailingAnchor, constant: Margins.numberOfStarsLabelLeading),
             numberOfStarsLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            numberOfStarsLabel.heightAnchor.constraint(equalToConstant: Margines.numberOfStarsLabelHeight)
+            numberOfStarsLabel.heightAnchor.constraint(equalToConstant: Margins.numberOfStarsLabelHeight)
         ])
     }
     
@@ -141,10 +141,10 @@ final class DetailView: UIView {
         viewOnlineButton.addTarget(self, action: #selector(onlineButtonTapped), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-            viewOnlineButton.topAnchor.constraint(equalTo: userAvatarImageView.bottomAnchor, constant: Margines.viewOnlineButtonTop),
-            viewOnlineButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: Margines.viewOnlineButtonTrailing),
-            viewOnlineButton.widthAnchor.constraint(equalToConstant: Margines.viewOnlineButtonWidth),
-            viewOnlineButton.heightAnchor.constraint(equalToConstant: Margines.viewOnlineButtonHeight)
+            viewOnlineButton.topAnchor.constraint(equalTo: userAvatarImageView.bottomAnchor, constant: Margins.viewOnlineButtonTop),
+            viewOnlineButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: Margins.viewOnlineButtonTrailing),
+            viewOnlineButton.widthAnchor.constraint(equalToConstant: Margins.viewOnlineButtonWidth),
+            viewOnlineButton.heightAnchor.constraint(equalToConstant: Margins.viewOnlineButtonHeight)
         ])
     }
     
@@ -156,10 +156,10 @@ final class DetailView: UIView {
         self.addSubview(repositoryTitleLabel)
         
         NSLayoutConstraint.activate([
-            repositoryTitleLabel.topAnchor.constraint(equalTo: userAvatarImageView.bottomAnchor, constant: Margines.repositoryTitleLabelTop),
+            repositoryTitleLabel.topAnchor.constraint(equalTo: userAvatarImageView.bottomAnchor, constant: Margins.repositoryTitleLabelTop),
             repositoryTitleLabel.leadingAnchor.constraint(equalTo: repositoryByLabel.leadingAnchor),
-            repositoryTitleLabel.trailingAnchor.constraint(equalTo: viewOnlineButton.leadingAnchor, constant: Margines.repositoryTitleLabelTrailing),
-            repositoryTitleLabel.heightAnchor.constraint(equalToConstant: Margines.repositoryTitleLabelHeight)
+            repositoryTitleLabel.trailingAnchor.constraint(equalTo: viewOnlineButton.leadingAnchor, constant: Margins.repositoryTitleLabelTrailing),
+            repositoryTitleLabel.heightAnchor.constraint(equalToConstant: Margins.repositoryTitleLabelHeight)
         ])
     }
     
@@ -168,10 +168,10 @@ final class DetailView: UIView {
         commitsHistoryLabel.text = Constants.commitsHistory
         
         NSLayoutConstraint.activate([
-            commitsHistoryLabel.topAnchor.constraint(equalTo: viewOnlineButton.bottomAnchor, constant: Margines.commitsHistoryLabelTop),
-            commitsHistoryLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Margines.commitsHistoryLabelLeading),
+            commitsHistoryLabel.topAnchor.constraint(equalTo: viewOnlineButton.bottomAnchor, constant: Margins.commitsHistoryLabelTop),
+            commitsHistoryLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Margins.commitsHistoryLabelLeading),
             commitsHistoryLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            commitsHistoryLabel.heightAnchor.constraint(equalToConstant: Margines.commitsHistoryLabelHeight)
+            commitsHistoryLabel.heightAnchor.constraint(equalToConstant: Margins.commitsHistoryLabelHeight)
         ])
     }
     
@@ -182,7 +182,7 @@ final class DetailView: UIView {
             detailShareRepoView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             detailShareRepoView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             detailShareRepoView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            detailShareRepoView.heightAnchor.constraint(equalToConstant: Margines.detailShareRepoViewHeight)
+            detailShareRepoView.heightAnchor.constraint(equalToConstant: Margins.detailShareRepoViewHeight)
         ])
     }
     
@@ -191,7 +191,7 @@ final class DetailView: UIView {
         tableView.dataSource = detailTableViewDataSource
         tableView.delegate = detailTableViewDelegate
         tableView.register(DetailCustomCell.self, forCellReuseIdentifier: Constants.detailCellReuseId)
-        tableView.estimatedRowHeight = Margines.detailTableViewEstimatedRowHeight
+        tableView.estimatedRowHeight = Margins.detailTableViewEstimatedRowHeight
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         
@@ -207,7 +207,7 @@ final class DetailView: UIView {
             tableView.topAnchor.constraint(equalTo: commitsHistoryLabel.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: detailShareRepoView.topAnchor, constant: Margines.detailTableViewBottom)
+            tableView.bottomAnchor.constraint(equalTo: detailShareRepoView.topAnchor, constant: Margins.detailTableViewBottom)
         ])
     }
 }

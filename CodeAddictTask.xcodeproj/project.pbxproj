@@ -17,7 +17,7 @@
 		5A2647562580CB0900803FF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A2647552580CB0900803FF3 /* Assets.xcassets */; };
 		5A2647592580CB0900803FF3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A2647572580CB0900803FF3 /* LaunchScreen.storyboard */; };
 		5A26476F2580CB0900803FF3 /* CodeAddictTaskUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A26476E2580CB0900803FF3 /* CodeAddictTaskUITests.swift */; };
-		5A94F27625C137B700E0E111 /* Margines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A94F27525C137B700E0E111 /* Margines.swift */; };
+		5A94F27625C137B700E0E111 /* Margins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A94F27525C137B700E0E111 /* Margins.swift */; };
 		5A94F28125C14A7300E0E111 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A94F28025C14A7300E0E111 /* Fonts.swift */; };
 		5AA2803F2580CEE90043FE26 /* SearchRepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA2803E2580CEE90043FE26 /* SearchRepositoriesViewController.swift */; };
 		5AA280482580D0870043FE26 /* SearchRepositoriesCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA280472580D0870043FE26 /* SearchRepositoriesCustomCell.swift */; };
@@ -82,7 +82,7 @@
 		5A26476A2580CB0900803FF3 /* CodeAddictTaskUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeAddictTaskUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A26476E2580CB0900803FF3 /* CodeAddictTaskUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeAddictTaskUITests.swift; sourceTree = "<group>"; };
 		5A2647702580CB0A00803FF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5A94F27525C137B700E0E111 /* Margines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Margines.swift; sourceTree = "<group>"; };
+		5A94F27525C137B700E0E111 /* Margins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Margins.swift; sourceTree = "<group>"; };
 		5A94F28025C14A7300E0E111 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		5AA2803E2580CEE90043FE26 /* SearchRepositoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesViewController.swift; sourceTree = "<group>"; };
 		5AA280472580D0870043FE26 /* SearchRepositoriesCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesCustomCell.swift; sourceTree = "<group>"; };
@@ -220,7 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				5AA2804D2580D13C0043FE26 /* Constants.swift */,
-				5A94F27525C137B700E0E111 /* Margines.swift */,
+				5A94F27525C137B700E0E111 /* Margins.swift */,
 				5A94F28025C14A7300E0E111 /* Fonts.swift */,
 				5AA2806A2580EDFA0043FE26 /* Images.swift */,
 				5A01B02B25869C060015EFA9 /* CustomErrors.swift */,
@@ -494,7 +494,7 @@
 				5AB446AC258DC3770088ADB4 /* SearchRepositoriesView.swift in Sources */,
 				5AA280C625823CE20043FE26 /* Repositories.swift in Sources */,
 				5AB4464E258B9B220088ADB4 /* SearchRepositoriesViewModel.swift in Sources */,
-				5A94F27625C137B700E0E111 /* Margines.swift in Sources */,
+				5A94F27625C137B700E0E111 /* Margins.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -48,10 +48,10 @@ final class DetailCustomCell: UITableViewCell {
         contentView.addSubview(circleWithNumberView)
         
         NSLayoutConstraint.activate([
-            circleWithNumberView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Margines.circleWithNumberViewTop),
-            circleWithNumberView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Margines.circleWithNumberViewLeading),
-            circleWithNumberView.widthAnchor.constraint(equalToConstant: Margines.circleWithNumberViewWidth),
-            circleWithNumberView.heightAnchor.constraint(equalToConstant: Margines.circleWithNumberViewHeight)
+            circleWithNumberView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Margins.circleWithNumberViewTop),
+            circleWithNumberView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Margins.circleWithNumberViewLeading),
+            circleWithNumberView.widthAnchor.constraint(equalToConstant: Margins.circleWithNumberViewWidth),
+            circleWithNumberView.heightAnchor.constraint(equalToConstant: Margins.circleWithNumberViewHeight)
         ])
     }
     
@@ -60,10 +60,10 @@ final class DetailCustomCell: UITableViewCell {
         contentView.addSubview(commitAuthorNameLabel)
         
         NSLayoutConstraint.activate([
-            commitAuthorNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Margines.commitAuthorNameLabelTop),
-            commitAuthorNameLabel.leadingAnchor.constraint(equalTo: circleWithNumberView.trailingAnchor, constant: Margines.commitAuthorNameLabelLeading),
-            commitAuthorNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Margines.commitAuthorNameLabelTrailing),
-            commitAuthorNameLabel.heightAnchor.constraint(equalToConstant: Margines.commitAuthorNameLabelHeight)
+            commitAuthorNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Margins.commitAuthorNameLabelTop),
+            commitAuthorNameLabel.leadingAnchor.constraint(equalTo: circleWithNumberView.trailingAnchor, constant: Margins.commitAuthorNameLabelLeading),
+            commitAuthorNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Margins.commitAuthorNameLabelTrailing),
+            commitAuthorNameLabel.heightAnchor.constraint(equalToConstant: Margins.commitAuthorNameLabelHeight)
         ])
     }
     
@@ -71,10 +71,10 @@ final class DetailCustomCell: UITableViewCell {
         contentView.addSubview(emailLabel)
         
         NSLayoutConstraint.activate([
-            emailLabel.topAnchor.constraint(equalTo: commitAuthorNameLabel.bottomAnchor, constant: Margines.emailLabelTop),
-            emailLabel.leadingAnchor.constraint(equalTo: circleWithNumberView.trailingAnchor, constant: Margines.emailLabelLeading),
-            emailLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Margines.emailLabelTrailing),
-            emailLabel.heightAnchor.constraint(equalToConstant: Margines.emailLabelHeight)
+            emailLabel.topAnchor.constraint(equalTo: commitAuthorNameLabel.bottomAnchor, constant: Margins.emailLabelTop),
+            emailLabel.leadingAnchor.constraint(equalTo: circleWithNumberView.trailingAnchor, constant: Margins.emailLabelLeading),
+            emailLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Margins.emailLabelTrailing),
+            emailLabel.heightAnchor.constraint(equalToConstant: Margins.emailLabelHeight)
         ])
     }
     
@@ -85,11 +85,11 @@ final class DetailCustomCell: UITableViewCell {
         contentView.addSubview(commitMessageLabel)
         
         NSLayoutConstraint.activate([
-            commitMessageLabel.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: Margines.commitMessageLabelTop),
-            commitMessageLabel.leadingAnchor.constraint(equalTo: circleWithNumberView.trailingAnchor, constant: Margines.commitMessageLabelLeading),
-            commitMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Margines.commitMessageLabelTrailing),
-            commitMessageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Margines.commitMessageLabelBottom),
-            commitMessageLabel.heightAnchor.constraint(lessThanOrEqualToConstant: Margines.commitMessageLabelHeight)
+            commitMessageLabel.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: Margins.commitMessageLabelTop),
+            commitMessageLabel.leadingAnchor.constraint(equalTo: circleWithNumberView.trailingAnchor, constant: Margins.commitMessageLabelLeading),
+            commitMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Margins.commitMessageLabelTrailing),
+            commitMessageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Margins.commitMessageLabelBottom),
+            commitMessageLabel.heightAnchor.constraint(lessThanOrEqualToConstant: Margins.commitMessageLabelHeight)
         ])
     }
 }
